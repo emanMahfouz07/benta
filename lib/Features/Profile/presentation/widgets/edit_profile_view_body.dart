@@ -43,7 +43,7 @@ class EditProfileViewBody extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 const Expanded(child: CustomTextField(hintText: 'Phone')),
               ],
             ),

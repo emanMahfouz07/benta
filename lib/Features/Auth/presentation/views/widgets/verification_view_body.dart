@@ -1,4 +1,4 @@
-import 'package:benta/Features/Auth/widgets/custom_digit_container.dart';
+import 'package:benta/Features/Auth/presentation/views/widgets/custom_digit_container.dart';
 import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';

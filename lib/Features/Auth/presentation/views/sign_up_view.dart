@@ -1,4 +1,4 @@
-import 'package:benta/Features/Auth/widgets/Sign_up_view_body.dart';
+import 'package:benta/Features/Auth/presentation/views/widgets/Sign_up_view_body.dart';
 import 'package:flutter/material.dart';
 
 class SignUpView extends StatelessWidget {

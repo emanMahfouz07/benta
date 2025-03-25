@@ -1,8 +1,8 @@
-import 'package:benta/Features/Auth/forget_password.dart';
-import 'package:benta/Features/Auth/rest_password_view.dart';
-import 'package:benta/Features/Auth/sign_in.dart';
-import 'package:benta/Features/Auth/sign_up_view.dart';
-import 'package:benta/Features/Auth/verification_view.dart';
+import 'package:benta/Features/Auth/presentation/views/forget_password.dart';
+import 'package:benta/Features/Auth/presentation/views/rest_password_view.dart';
+import 'package:benta/Features/Auth/presentation/views/sign_in.dart';
+import 'package:benta/Features/Auth/presentation/views/sign_up_view.dart';
+import 'package:benta/Features/Auth/presentation/views/verification_view.dart';
 import 'package:benta/Features/Favourite/presentation/views/fav_view.dart';
 import 'package:benta/Features/Home/presentation/views/home.dart';
 import 'package:benta/Features/Cart/presentation/item_info_view.dart';
@@ -30,6 +30,7 @@ abstract class AppRouter {
   static const kFavouriteView = '/kFavouriteView';
   static const kNotificationView = '/kNotificationView';
   static const kEditProfileView = '/kEditProfileView';
+  static const kChooseNotificationView = '/kChooseNotificationView';
   static final router = GoRouter(
     routes: [
       GoRoute(path: '/', builder: ((context, state) => const SplashView())),
@@ -85,6 +86,10 @@ abstract class AppRouter {
       GoRoute(
         path: kEditProfileView,
         builder: ((context, state) => const EditProfileView()),
+      ),
+      GoRoute(
+        path: kChooseNotificationView,
+        builder: ((context, state) => const NotificationView()),
       ),
     ],
   );

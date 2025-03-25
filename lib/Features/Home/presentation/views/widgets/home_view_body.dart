@@ -4,11 +4,10 @@ import 'package:benta/Features/Home/presentation/views/widgets/custom_scroll_bar
 import 'package:benta/Features/Home/presentation/views/widgets/custom_search_bar.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/custom_see_all.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/image_carusol.dart';
-import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:icons_plus/icons_plus.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -17,7 +16,7 @@ class HomeViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 24.w),
+      padding: EdgeInsets.only(top: 40.h, left: 24.w, right: 24.w),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -32,7 +31,7 @@ class HomeViewBody extends StatelessWidget {
               ],
             ),
             SizedBox(height: 25.h),
-            ImageCarusol(),
+            AutoMovingCarousel(),
             SizedBox(height: 30.h),
             CustomSeeAllWidget(title: 'Categories'),
             SizedBox(height: 15.h),
@@ -55,6 +54,7 @@ class HomeViewBody extends StatelessWidget {
                 },
               ),
             ),
+            SizedBox(height: 15.h),
             CustomSeeAllWidget(title: 'Chair'),
             SizedBox(height: 15.h),
             SizedBox(

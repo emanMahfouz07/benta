@@ -1,7 +1,8 @@
-import 'package:benta/Features/Auth/widgets/custom_horizontal_Line.dart';
-import 'package:benta/Features/Auth/widgets/custom_text_field.dart';
+import 'package:benta/Features/Auth/presentation/views/widgets/custom_horizontal_Line.dart';
+import 'package:benta/Features/Auth/presentation/views/widgets/custom_text_field.dart';
 import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/constants.dart';
+import 'package:benta/core/utils/helper_class.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:benta/core/utils/widgets/custom_all_use_button.dart';
 import 'package:flutter/material.dart';
@@ -53,11 +54,26 @@ class SignInViewBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Spacer(flex: 4),
-                Icon(EvaIcons.google_outline, color: kPrimaryColor),
+                IconButton(
+                  icon: Icon(EvaIcons.google_outline, color: kPrimaryColor),
+                  onPressed: () async {
+                    await HelperClass.goToWebPage("https://mail.google.com/");
+                  },
+                ),
                 Spacer(),
-                Icon(EvaIcons.facebook_outline, color: kPrimaryColor),
+                IconButton(
+                  icon: Icon(EvaIcons.facebook_outline, color: kPrimaryColor),
+                  onPressed: () async {
+                    await HelperClass.goToWebPage('https://www.facebook.com/');
+                  },
+                ),
                 Spacer(),
-                Icon(EvaIcons.twitter_outline, color: kPrimaryColor),
+                IconButton(
+                  icon: Icon(EvaIcons.twitter_outline, color: kPrimaryColor),
+                  onPressed: () async {
+                    await HelperClass.goToWebPage('https://x.com/home');
+                  },
+                ),
                 Spacer(flex: 4),
               ],
             ),

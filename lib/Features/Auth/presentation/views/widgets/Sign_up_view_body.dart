@@ -1,5 +1,5 @@
-import 'package:benta/Features/Auth/widgets/custom_horizontal_Line.dart';
-import 'package:benta/Features/Auth/widgets/custom_text_field.dart';
+import 'package:benta/Features/Auth/presentation/views/widgets/custom_horizontal_Line.dart';
+import 'package:benta/Features/Auth/presentation/views/widgets/custom_text_field.dart';
 import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';

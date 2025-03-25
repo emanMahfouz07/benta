@@ -21,21 +21,24 @@ class CustomItemContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.w),
+      padding: EdgeInsets.only(right: 14.h),
       child: GestureDetector(
         onTap: () {
           context.push(AppRouter.kItemInfoView);
         },
-        child: Container(
-          width: 127.w,
-
-          decoration: BoxDecoration(
-            color: kBGColor,
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          child: Column(
-            children: [
-              Stack(
+        child: Column(
+          children: [
+            Container(
+              width: 127.w,
+              height: 124.h,
+              decoration: BoxDecoration(
+                color: kBGColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.r),
+                  topRight: Radius.circular(10.r),
+                ),
+              ),
+              child: Stack(
                 children: [
                   Positioned(
                     top: 8.h,
@@ -50,60 +53,75 @@ class CustomItemContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(16),
-                    ),
+                  SizedBox(height: 3.h),
+                  Positioned.fill(
                     child: Image.asset(
                       image,
                       height: 100.h,
                       width: double.infinity,
-                      fit: BoxFit.scaleDown,
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.all(8.r),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(title, style: Styles.style16),
-                        SizedBox(width: 10.w),
-                        Icon(Icons.star, color: kPrimaryColor, size: 14),
-                        SizedBox(width: 5.w),
-                        Text(
-                          "($rate)",
-                          style: Styles.style14.copyWith(color: kPrimaryColor),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "\$$price",
-                          style: Styles.style18.copyWith(
-                            color: kPrimaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-
-                        CircleAvatar(
-                          radius: 18.r,
-                          backgroundColor: kPrimaryColor,
-                          child: Icon(BoxIcons.bx_plus, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ],
+            ),
+            Container(
+              width: 127.w,
+              height: 68.h,
+              padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 8.h),
+              decoration: BoxDecoration(
+                color: Color(0xffD4DDDD),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.r),
+                  bottomRight: Radius.circular(10.r),
                 ),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        title,
+                        style: Styles.style14.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(width: 5.w),
+                      Icon(Icons.star, color: kPrimaryColor, size: 14),
+                      SizedBox(width: 3.w),
+                      Text(
+                        "($rate)",
+                        style: Styles.style10.copyWith(color: kPrimaryColor),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "\$$price",
+                        style: Styles.style14.copyWith(
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      CircleAvatar(
+                        radius: 12.r,
+                        backgroundColor: kPrimaryColor,
+                        child: Icon(
+                          BoxIcons.bx_plus,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

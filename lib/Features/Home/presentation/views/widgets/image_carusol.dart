@@ -1,87 +1,79 @@
-import 'dart:async';
 import 'package:benta/core/utils/constants.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ImageCarusol extends StatefulWidget {
-  const ImageCarusol({super.key});
+class AutoMovingCarousel extends StatefulWidget {
+  const AutoMovingCarousel({super.key});
 
   @override
-  State<ImageCarusol> createState() => _ImageCarusolState();
+  State<AutoMovingCarousel> createState() => _AutoMovingCarouselState();
 }
 
-class _ImageCarusolState extends State<ImageCarusol> {
-  final PageController _pageController = PageController(viewportFraction: 0.8);
-  int _currentPage = 0;
-  Timer? _timer;
+class _AutoMovingCarouselState extends State<AutoMovingCarousel> {
+  final CarouselSliderController controller = CarouselSliderController();
+  int _currentIndex = 0;
 
-  final List<String> images = [
+  final List<String> imageList = [
     'assets/images/fd1_lngchr_bh_frontlow-field-lounge-chair-tait-blush_2 1.png',
     'assets/images/fd1_lngchr_bh_frontlow-field-lounge-chair-tait-blush_2 1.png',
     'assets/images/fd1_lngchr_bh_frontlow-field-lounge-chair-tait-blush_2 1.png',
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page!.round();
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 200,
-          child: PageView.builder(
-            controller: _pageController,
-            itemCount: images.length,
-            onPageChanged: (page) {
+        CarouselSlider(
+          carouselController: controller,
+          options: CarouselOptions(
+            height: 176,
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 3),
+            autoPlayAnimationDuration: const Duration(milliseconds: 800),
+            viewportFraction: 1,
+            enlargeCenterPage: true,
+            onPageChanged: (index, reason) {
               setState(() {
-                _currentPage = page;
+                _currentIndex = index;
               });
             },
-            itemBuilder: (context, index) {
-              return AnimatedContainer(
-                width: 300,
-                duration: Duration(milliseconds: 500),
-                margin: EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  color: kBGColor,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-
-                child: Row(
-                  children: [
-                    Text('30'),
-                    Image.asset(images[index], fit: BoxFit.cover),
-                  ],
-                ),
-              );
-            },
           ),
+          items:
+              imageList.map((image) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(30.r),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    width: 372.w,
+                    color: kBGColor,
+                    child: Image.asset(image, fit: BoxFit.contain),
+                  ),
+                );
+              }).toList(),
         ),
-        SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(images.length, (index) {
-            bool isActive = index == _currentPage;
-            return AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              margin: EdgeInsets.symmetric(horizontal: 5),
-              width: isActive ? 12 : 8,
-              height: 8,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isActive ? kPrimaryColor : Colors.grey,
-              ),
-            );
-          }),
-        ),
+        SizedBox(height: 10.h),
+        customIndicator(),
       ],
+    );
+  }
+
+  Widget customIndicator() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(imageList.length, (index) {
+        bool isActive = index == _currentIndex;
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          margin: EdgeInsets.symmetric(horizontal: 4.h),
+          width: isActive ? 16 : 8,
+          height: 8.h,
+          decoration: BoxDecoration(
+            color: isActive ? kPrimaryColor : Colors.grey,
+            borderRadius: BorderRadius.circular(4.r),
+          ),
+        );
+      }),
     );
   }
 }

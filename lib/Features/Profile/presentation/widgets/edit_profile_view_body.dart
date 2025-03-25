@@ -1,4 +1,4 @@
-import 'package:benta/Features/Auth/widgets/custom_text_field.dart';
+import 'package:benta/Features/Auth/presentation/views/widgets/custom_text_field.dart';
 import 'package:benta/Features/Profile/presentation/widgets/profile_image.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:benta/core/utils/widgets/custom_all_use_button.dart';

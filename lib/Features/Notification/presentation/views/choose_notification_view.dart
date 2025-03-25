@@ -1,14 +1,14 @@
 import 'package:benta/Features/Notification/presentation/views/widgets/custom_switch_button.dart';
 import 'package:flutter/material.dart';
 
-class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
+class ChooseNotificationView extends StatefulWidget {
+  const ChooseNotificationView({super.key});
 
   @override
-  NotificationScreenState createState() => NotificationScreenState();
+  ChooseNotificationViewState createState() => ChooseNotificationViewState();
 }
 
-class NotificationScreenState extends State<NotificationScreen> {
+class ChooseNotificationViewState extends State<ChooseNotificationView> {
   bool generalNotification = true;
   bool vibrate = true;
   bool sound = true;

@@ -1,4 +1,4 @@
-import 'package:benta/Features/Auth/widgets/sign_in_body.dart';
+import 'package:benta/Features/Auth/presentation/views/widgets/sign_in_body.dart';
 import 'package:flutter/material.dart';
 
 class SignInView extends StatelessWidget {

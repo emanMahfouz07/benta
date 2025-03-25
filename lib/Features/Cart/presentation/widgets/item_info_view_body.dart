@@ -9,45 +9,46 @@ class ItemInfoViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     List<String> imageList = [
       'assets/images/Rectangle 47.png',
       'assets/images/Rectangle 48.png',
     ];
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  context.pop();
-                },
-                icon: Icon(Icons.arrow_back_ios),
-              ),
-              Spacer(),
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.favorite_outline),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    context.pop();
+                  },
+                  icon: Icon(Icons.arrow_back_ios),
                 ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              CustomColorPicker(),
-              Spacer(flex: 1),
-              Image.asset('assets/images/mandi-arm-chair-in-cream 1.png'),
-              Spacer(flex: 3),
-            ],
-          ),
-          CustomCounter(),
-          ItemInfoBottomSheet(imageList: imageList),
-        ],
+                Spacer(),
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.favorite_outline),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                CustomColorPicker(),
+                Spacer(flex: 1),
+                Image.asset('assets/images/mandi-arm-chair-in-cream 1.png'),
+                Spacer(flex: 3),
+              ],
+            ),
+            CustomCounter(),
+            ItemInfoBottomSheet(imageList: imageList),
+          ],
+        ),
       ),
     );
   }

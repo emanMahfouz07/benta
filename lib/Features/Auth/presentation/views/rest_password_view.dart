@@ -1,4 +1,4 @@
-import 'package:benta/Features/Auth/widgets/rest_password_view_body.dart';
+import 'package:benta/Features/Auth/presentation/views/widgets/rest_password_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

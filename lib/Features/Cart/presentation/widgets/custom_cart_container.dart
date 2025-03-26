@@ -2,6 +2,7 @@ import 'package:benta/Features/Cart/presentation/widgets/small_counter.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomCartContainer extends StatelessWidget {
   const CustomCartContainer({
@@ -18,20 +19,19 @@ class CustomCartContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.r),
       child: Row(
         children: [
           Expanded(
             child: Container(
-              height: screenSize.height * 0.18,
+              height: 120.h,
 
               decoration: BoxDecoration(
                 color: kBGColor,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  bottomLeft: Radius.circular(8),
+                  topLeft: Radius.circular(8.r),
+                  bottomLeft: Radius.circular(8.r),
                 ),
               ),
 
@@ -49,17 +49,17 @@ class CustomCartContainer extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              height: screenSize.height * 0.18,
+              height: 120.h,
               decoration: BoxDecoration(
                 color: kSecondryColor,
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
+                  topRight: Radius.circular(8.r),
+                  bottomRight: Radius.circular(8.r),
                 ),
               ),
 
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0.r),
                 child: Column(
                   children: [
                     Spacer(),
@@ -74,9 +74,9 @@ class CustomCartContainer extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: 4),
+                        SizedBox(width: 4.w),
                         Icon(Icons.star, color: kPrimaryColor, size: 12),
-                        SizedBox(width: 4),
+                        SizedBox(width: 4.w),
                         Flexible(
                           child: Text(
                             "($rate)",

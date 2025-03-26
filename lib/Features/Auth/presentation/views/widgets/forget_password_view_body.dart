@@ -12,6 +12,7 @@ class ForgetPasswordViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
     return Center(
       child: SafeArea(
         child: Padding(
@@ -31,7 +32,10 @@ class ForgetPasswordViewBody extends StatelessWidget {
               SizedBox(height: 25.h),
               Text('Forgot password', style: Styles.style24medium),
               SizedBox(height: 25.h),
-              CustomTextField(hintText: 'Email or Phone'),
+              CustomTextField(
+                hintText: 'Email or Phone',
+                controller: emailController,
+              ),
               SizedBox(height: 25.h),
               CustomAllUseButton(
                 title: 'Continue',

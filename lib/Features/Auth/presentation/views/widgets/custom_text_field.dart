@@ -6,10 +6,14 @@ class CustomTextField extends StatefulWidget {
     super.key,
     required this.hintText,
     this.isPassword = false,
+    required this.controller,
+    this.validator,
   });
 
   final String hintText;
   final bool isPassword;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -22,8 +26,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 56.h,
-      child: TextField(
+      child: TextFormField(
+        controller: widget.controller,
         obscureText: widget.isPassword ? _isObscured : false,
+        validator: widget.validator,
         decoration: InputDecoration(
           hintText: widget.hintText,
           filled: true,
@@ -38,6 +44,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
             borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16.r),
+            borderSide: BorderSide.none,
+          ),
+          errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16.r),
             borderSide: BorderSide.none,
           ),

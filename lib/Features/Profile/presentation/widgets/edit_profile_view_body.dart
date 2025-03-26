@@ -10,6 +10,10 @@ class EditProfileViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController phoneController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController addressController = TextEditingController();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -20,7 +24,7 @@ class EditProfileViewBody extends StatelessWidget {
             ProfilePicture(),
 
             SizedBox(height: 24.h),
-            const CustomTextField(hintText: 'Full Name'),
+            CustomTextField(hintText: 'Full Name', controller: nameController),
 
             SizedBox(height: 16.h),
 
@@ -44,17 +48,22 @@ class EditProfileViewBody extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 12.w),
-                const Expanded(child: CustomTextField(hintText: 'Phone')),
+                Expanded(
+                  child: CustomTextField(
+                    hintText: 'Phone',
+                    controller: phoneController,
+                  ),
+                ),
               ],
             ),
 
             const SizedBox(height: 16),
 
-            const CustomTextField(hintText: 'Email'),
+            CustomTextField(hintText: 'Email', controller: emailController),
 
             const SizedBox(height: 16),
 
-            const CustomTextField(hintText: 'Address'),
+            CustomTextField(hintText: 'Address', controller: addressController),
 
             const SizedBox(height: 32),
 

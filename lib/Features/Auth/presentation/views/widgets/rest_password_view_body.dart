@@ -12,6 +12,7 @@ class ResetPasswordViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController passwordController = TextEditingController();
     return Center(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -21,9 +22,15 @@ class ResetPasswordViewBody extends StatelessWidget {
             SizedBox(height: 25.h),
             Text('Reset password', style: Styles.style24medium),
             SizedBox(height: 25.h),
-            CustomTextField(hintText: 'New password'),
+            CustomTextField(
+              hintText: 'New password',
+              controller: passwordController,
+            ),
             SizedBox(height: 20.h),
-            CustomTextField(hintText: 'Confirm Password'),
+            CustomTextField(
+              hintText: 'Confirm Password',
+              controller: passwordController,
+            ),
             SizedBox(height: 25.h),
             CustomAllUseButton(
               title: 'Continue',

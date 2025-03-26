@@ -25,7 +25,7 @@ class TotalPriceContainer extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('Total price', style: Styles.style20),
+              Text('Total price', style: Styles.style22),
               Spacer(),
               Text(
                 "\$$price",

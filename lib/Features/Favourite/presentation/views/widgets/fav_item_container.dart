@@ -2,6 +2,7 @@ import 'package:benta/Features/Cart/presentation/widgets/small_counter.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class FavouriteItemContainer extends StatelessWidget {
@@ -19,20 +20,19 @@ class FavouriteItemContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(bottom: 14.0.h),
       child: Row(
         children: [
           Expanded(
             child: Container(
-              height: screenSize.height * 0.18,
+              height: 120.h,
 
               decoration: BoxDecoration(
                 color: kBGColor,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  bottomLeft: Radius.circular(8),
+                  topLeft: Radius.circular(8.r),
+                  bottomLeft: Radius.circular(8.r),
                 ),
               ),
 
@@ -43,48 +43,45 @@ class FavouriteItemContainer extends StatelessWidget {
                     onPressed: () {},
                     icon: Icon(Icons.favorite_outline),
                   ),
-                  Flexible(child: Center(child: Image.asset(image))),
+                  Flexible(
+                    child: Center(child: Image.asset(image, fit: BoxFit.cover)),
+                  ),
                 ],
               ),
             ),
           ),
           Expanded(
             child: Container(
-              height: screenSize.height * 0.18,
+              height: 120.h,
               decoration: BoxDecoration(
                 color: kSecondryColor,
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
+                  topRight: Radius.circular(8.r),
+                  bottomRight: Radius.circular(8.r),
                 ),
               ),
 
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.r),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Spacer(),
                     Row(
                       children: [
-                        Flexible(
-                          child: Text(
-                            softWrap: true,
-                            title,
-                            style: Styles.style16.copyWith(
-                              fontWeight: FontWeight.w500,
-                            ),
+                        Text(
+                          softWrap: true,
+                          title,
+                          style: Styles.style16.copyWith(
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(width: 8),
-                        Icon(Icons.star, color: kPrimaryColor, size: 12),
-                        SizedBox(width: 4),
-                        Flexible(
-                          child: Text(
-                            "($rate)",
-                            style: Styles.style12.copyWith(
-                              color: kPrimaryColor,
-                            ),
-                          ),
+                        SizedBox(width: 8.w),
+                        Icon(Icons.star, color: kPrimaryColor, size: 12.r),
+                        SizedBox(width: 4.w),
+                        Text(
+                          overflow: TextOverflow.ellipsis,
+                          "($rate)",
+                          style: Styles.style12.copyWith(color: kPrimaryColor),
                         ),
                       ],
                     ),
@@ -98,13 +95,13 @@ class FavouriteItemContainer extends StatelessWidget {
                             softWrap: true,
                             style: Styles.style18.copyWith(
                               color: kPrimaryColor,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                         Spacer(),
                         CircleAvatar(
-                          radius: 15,
+                          radius: 15.r,
                           backgroundColor: kPrimaryColor,
                           child: Icon(
                             BoxIcons.bx_plus,

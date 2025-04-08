@@ -25,7 +25,10 @@ class CustomSwitchButton extends StatelessWidget {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: kPrimaryColor,
+            activeColor: Colors.white,
+            activeTrackColor: kPrimaryColor,
+            inactiveThumbColor: kPrimaryColor,
+            inactiveTrackColor: Colors.white,
           ),
         ],
       ),

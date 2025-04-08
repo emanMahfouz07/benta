@@ -5,7 +5,6 @@ import 'package:benta/core/utils/widgets/custom_all_use_button.dart';
 import 'package:benta/core/utils/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 
 class FavouriteViewBody extends StatelessWidget {
@@ -26,6 +25,24 @@ class FavouriteViewBody extends StatelessWidget {
         "rate": 4.7,
         "price": " 85.50",
       },
+      {
+        "title": "Sofa - bed",
+        "image": 'assets/images/peyton_2_seater_sofa-compact_sized 1.png',
+        "rate": 4.7,
+        "price": " 85.50",
+      },
+      {
+        "title": "Sofa - bed",
+        "image": 'assets/images/peyton_2_seater_sofa-compact_sized 1.png',
+        "rate": 4.7,
+        "price": " 85.50",
+      },
+      {
+        "title": "Sofa - bed",
+        "image": 'assets/images/peyton_2_seater_sofa-compact_sized 1.png',
+        "rate": 4.7,
+        "price": " 85.50",
+      },
     ];
     return Padding(
       padding: const EdgeInsets.all(24.0),
@@ -36,6 +53,7 @@ class FavouriteViewBody extends StatelessWidget {
             CustomSearchBar(),
             SizedBox(height: 27.h),
             ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: cartItems.length,
               itemBuilder: (BuildContext context, int index) {

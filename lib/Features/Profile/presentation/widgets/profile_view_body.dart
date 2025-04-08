@@ -65,7 +65,9 @@ class ProfileViewBody extends StatelessWidget {
               CustomNavigationTile(
                 icon: Icons.notifications,
                 title: 'Notifications',
-                onTap: () {},
+                onTap: () {
+                  context.push(AppRouter.kChooseNotificationView);
+                },
               ),
               CustomNavigationTile(
                 icon: FontAwesome.award_solid,

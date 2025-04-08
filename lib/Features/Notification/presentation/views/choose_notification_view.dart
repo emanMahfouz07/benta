@@ -1,5 +1,7 @@
+import 'package:benta/Features/Notification/presentation/views/widgets/choose_notifiction_view_body.dart';
 import 'package:benta/Features/Notification/presentation/views/widgets/custom_switch_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChooseNotificationView extends StatefulWidget {
   const ChooseNotificationView({super.key});
@@ -9,13 +11,6 @@ class ChooseNotificationView extends StatefulWidget {
 }
 
 class ChooseNotificationViewState extends State<ChooseNotificationView> {
-  bool generalNotification = true;
-  bool vibrate = true;
-  bool sound = true;
-  bool offer = true;
-  bool paymentRequest = true;
-  bool update = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,40 +24,7 @@ class ChooseNotificationViewState extends State<ChooseNotificationView> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          CustomSwitchButton(
-            title: 'General notification',
-            value: generalNotification,
-            onChanged: (val) => setState(() => generalNotification = val),
-          ),
-          CustomSwitchButton(
-            title: 'Vibrate',
-            value: vibrate,
-            onChanged: (val) => setState(() => vibrate = val),
-          ),
-          CustomSwitchButton(
-            title: 'Sound',
-            value: sound,
-            onChanged: (val) => setState(() => sound = val),
-          ),
-          CustomSwitchButton(
-            title: 'Offer',
-            value: offer,
-            onChanged: (val) => setState(() => offer = val),
-          ),
-          CustomSwitchButton(
-            title: 'Payment request',
-            value: paymentRequest,
-            onChanged: (val) => setState(() => paymentRequest = val),
-          ),
-          CustomSwitchButton(
-            title: 'Update',
-            value: update,
-            onChanged: (val) => setState(() => update = val),
-          ),
-        ],
-      ),
+      body: ChooseNotifictionViewBody(),
     );
   }
 }

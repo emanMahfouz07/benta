@@ -1,13 +1,19 @@
+import 'package:benta/Features/Home/presentation/manager/categoryFilterCubit/category_filter_cubit_cubit.dart';
+import 'package:benta/Features/Home/presentation/manager/cubit/get_item_cubit.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/home_app_bar.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/custom_item_container.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/custom_scroll_bar.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/custom_search_bar.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/custom_see_all.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/image_carusol.dart';
+import 'package:benta/core/utils/api_services.dart';
+import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/constants.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -15,6 +21,8 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> favoriteItems = [];
+
     return Padding(
       padding: EdgeInsets.only(top: 40.h, left: 24.w, right: 24.w),
       child: SingleChildScrollView(
@@ -24,9 +32,15 @@ class HomeViewBody extends StatelessWidget {
             SizedBox(height: 25.h),
             Row(
               children: [
-                const Icon(FontAwesome.bell, color: kPrimaryColor),
+                IconButton(
+                  icon: Icon(FontAwesome.bell),
+                  color: kPrimaryColor,
+                  onPressed: () {
+                    context.push(AppRouter.kNotificationView);
+                  },
+                ),
                 SizedBox(width: 8.w),
-                Expanded(child: CustomSearchBar(suffixIcon: Icons.camera_alt)),
+                Expanded(child: CustomSearchBar(suffixIcon: Icons.mic_none)),
                 SizedBox(width: 10.w),
               ],
             ),
@@ -35,42 +49,44 @@ class HomeViewBody extends StatelessWidget {
             SizedBox(height: 30.h),
             CustomSeeAllWidget(title: 'Categories'),
             SizedBox(height: 15.h),
-            CategoryFilter(),
-            SizedBox(height: 30.h),
-            CustomSeeAllWidget(title: 'Sofa'),
-            SizedBox(height: 15.h),
-            SizedBox(
-              height: 192.h,
-              child: ListView.builder(
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return CustomItemContainer(
-                    title: 'Chair',
-                    price: '100',
-                    rate: '4.5',
-                    image: 'assets/images/unsplash_Dp2xzrdXrNs.png',
-                  );
-                },
-              ),
+            BlocProvider(
+              create:
+                  (_) =>
+                      CategoryFilterCubit(ApiServices(Dio()))..getCategories(),
+              child: const CategoryFilter(),
             ),
-            SizedBox(height: 15.h),
-            CustomSeeAllWidget(title: 'Chair'),
-            SizedBox(height: 15.h),
-            SizedBox(
-              height: 192.h,
-              child: ListView.builder(
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return CustomItemContainer(
-                    title: 'Sofa',
-                    price: '100',
-                    rate: '4.5',
-                    image: 'assets/images/81Fdsh6B2vL 1.png',
+            SizedBox(height: 30.h),
+
+            BlocBuilder<GetItemCubit, GetItemState>(
+              builder: (context, state) {
+                if (state is GetItemLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is GetItemSuccess) {
+                  return SizedBox(
+                    height: 192.h,
+                    child: ListView.builder(
+                      itemCount: state.items.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        final item = state.items[index];
+                        return CustomItemContainer(
+                          title: item.title,
+                          price: item.price.toString(),
+                          rate: item.rating.rate.toString(),
+                          image: item.image,
+                          onFavoriteChanged: (isFavorite) {},
+                        );
+                      },
+                    ),
                   );
-                },
-              ),
+                } else if (state is GetItemFailure) {
+                  return Center(
+                    child: Text('Failed to load items: ${state.errorMessage}'),
+                  );
+                } else {
+                  return Center(child: Text('Select a category'));
+                }
+              },
             ),
           ],
         ),

@@ -16,6 +16,8 @@ class MyCartViewBody extends StatefulWidget {
 }
 
 class _MyCartViewBodyState extends State<MyCartViewBody> {
+  List<double> itemTotals = [];
+
   final List<Map<String, dynamic>> cartItems = [
     {
       "title": "Modern Chair",
@@ -31,10 +33,16 @@ class _MyCartViewBodyState extends State<MyCartViewBody> {
     },
   ];
   double _calculateTotalPrice() {
-    return cartItems.fold(
-      0,
-      (sum, item) => sum + double.tryParse(item["price"].toString())!,
-    );
+    return itemTotals.fold(0, (sum, item) => sum + item);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    itemTotals =
+        cartItems.map((item) {
+          return (double.tryParse(item['price']) ?? 0) * (item['count'] ?? 1);
+        }).toList();
   }
 
   @override
@@ -52,36 +60,39 @@ class _MyCartViewBodyState extends State<MyCartViewBody> {
                 itemCount: cartItems.length,
                 itemBuilder: (context, index) {
                   final item = cartItems[index];
-                  return Container(
-                    constraints: BoxConstraints(minHeight: 120.h),
-                    child: Slidable(
-                      key: ValueKey(index),
-                      endActionPane: ActionPane(
-                        motion: ScrollMotion(),
-                        extentRatio: 0.2,
-                        children: [
-                          SlidableAction(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(8.r),
-                              bottomRight: Radius.circular(8.r),
-                            ),
-                            onPressed: (context) {
-                              setState(() {
-                                cartItems.removeAt(index);
-                              });
-                            },
-                            backgroundColor: kPrimaryColor,
-                            foregroundColor: Colors.white,
-                            icon: FontAwesome.trash_can,
+                  return Slidable(
+                    key: ValueKey(index),
+                    endActionPane: ActionPane(
+                      motion: ScrollMotion(),
+                      extentRatio: 0.2,
+                      children: [
+                        SlidableAction(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(8.r),
+                            bottomRight: Radius.circular(8.r),
                           ),
-                        ],
-                      ),
-                      child: CustomCartContainer(
-                        title: item["title"],
-                        image: item["image"],
-                        rate: item["rate"],
-                        price: item["price"],
-                      ),
+                          onPressed: (context) {
+                            setState(() {
+                              cartItems.removeAt(index);
+                            });
+                          },
+                          backgroundColor: kPrimaryColor,
+                          foregroundColor: Colors.white,
+                          icon: FontAwesome.trash_can,
+                        ),
+                      ],
+                    ),
+                    child: CustomCartContainer(
+                      title: item["title"],
+                      image: item["image"],
+                      rate: item["rate"],
+                      price: item["price"],
+
+                      onTotalChanged: (newTotal) {
+                        setState(() {
+                          itemTotals[index] = newTotal;
+                        });
+                      },
                     ),
                   );
                 },

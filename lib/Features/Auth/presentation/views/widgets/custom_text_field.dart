@@ -8,10 +8,12 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     required this.controller,
     this.validator,
+    this.isEmail = false,
   });
 
   final String hintText;
   final bool isPassword;
+  final bool isEmail;
   final TextEditingController controller;
   final String? Function(String?)? validator;
 
@@ -27,6 +29,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return SizedBox(
       height: 56.h,
       child: TextFormField(
+        keyboardType:
+            widget.isEmail ? TextInputType.emailAddress : TextInputType.text,
         controller: widget.controller,
         obscureText: widget.isPassword ? _isObscured : false,
         validator: widget.validator,

@@ -7,6 +7,7 @@ import 'package:benta/Features/Favourite/presentation/views/fav_view.dart';
 import 'package:benta/Features/Home/presentation/views/home.dart';
 import 'package:benta/Features/Cart/presentation/item_info_view.dart';
 import 'package:benta/Features/Cart/presentation/my_cart_view.dart';
+import 'package:benta/Features/Notification/presentation/views/choose_notification_view.dart';
 import 'package:benta/Features/Notification/presentation/views/notification_view.dart';
 import 'package:benta/Features/OnBoarding/onboarding_screen.dart';
 import 'package:benta/Features/Order/presentation/views/order_view.dart';
@@ -89,7 +90,7 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kChooseNotificationView,
-        builder: ((context, state) => const NotificationView()),
+        builder: ((context, state) => const ChooseNotificationView()),
       ),
     ],
   );

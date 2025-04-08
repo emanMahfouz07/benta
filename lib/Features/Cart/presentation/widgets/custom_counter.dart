@@ -1,6 +1,7 @@
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomCounter extends StatefulWidget {
   const CustomCounter({super.key});
@@ -28,12 +29,11 @@ class _CustomCounterState extends State<CustomCounter> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Container(
-        width: screenSize.width * (120 / 375),
-        height: screenSize.height * 0.07,
+        width: 152.w,
+        height: 50.h,
         decoration: BoxDecoration(
           color: Color(0xff73888A),
           borderRadius: BorderRadius.circular(100),
@@ -44,10 +44,10 @@ class _CustomCounterState extends State<CustomCounter> {
             GestureDetector(
               onTap: increment,
               child: Container(
-                width: 30,
-                height: 25,
+                width: 30.w,
+                height: 26.h,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                   color: Colors.white,
                 ),
                 child: Icon(Icons.add, color: kPrimaryColor, size: 18),
@@ -63,10 +63,10 @@ class _CustomCounterState extends State<CustomCounter> {
             GestureDetector(
               onTap: decrement,
               child: Container(
-                width: 30,
-                height: 25,
+                width: 30.w,
+                height: 25.h,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                   color: Colors.white,
                 ),
                 child: Icon(Icons.remove, color: kPrimaryColor, size: 18),

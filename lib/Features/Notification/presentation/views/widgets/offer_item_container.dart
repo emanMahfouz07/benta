@@ -24,128 +24,136 @@ class OfferItemContainer extends StatelessWidget {
   final String off;
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.w),
+      padding: EdgeInsets.only(right: 14.w),
       child: GestureDetector(
         onTap: () {
           context.push(AppRouter.kItemInfoView);
         },
-        child: Container(
-          width: screenSize.width * 0.43,
-          decoration: BoxDecoration(
-            color: kBGColor,
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-
-            children: [
-              Stack(
-                children: [
-                  Positioned(
-                    top: 8.h,
-                    right: 8.w,
-                    child: CircleAvatar(
-                      radius: 12.r,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        FontAwesome.heart,
-                        color: kPrimaryColor,
-                        size: 17,
-                      ),
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  width: 127.w,
+                  height: 124.h,
+                  decoration: BoxDecoration(
+                    color: kBGColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.r),
+                      topRight: Radius.circular(10.r),
                     ),
                   ),
-                  Image.asset(
-                    image,
-                    height: 100.h,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-
-                  Positioned(
-                    bottom: 0,
-                    left: 10.w,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 7.w,
-                        vertical: 3.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Color(0xff73888A),
-                        borderRadius: BorderRadius.circular(100.r),
-                      ),
-
-                      child: Text(
-                        '$off% off',
-                        style: Styles.style12.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 8.h,
+                        right: 8.w,
+                        child: CircleAvatar(
+                          radius: 12.r,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            FontAwesome.heart,
+                            color: kPrimaryColor,
+                            size: 17,
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(height: 3.h),
+                      Image.asset(image, height: 100.h, width: double.infinity),
+                      Positioned(
+                        bottom: 8.h,
+                        left: 8.w,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 7.w,
+                            vertical: 3.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Color(0xff73888A),
+                            borderRadius: BorderRadius.circular(100.r),
+                          ),
+
+                          child: Text(
+                            '$off% off',
+                            style: Styles.style12.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              width: 127.w,
+              height: 68.h,
+              padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 8.h),
+              decoration: BoxDecoration(
+                color: Color(0xffD4DDDD),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.r),
+                  bottomRight: Radius.circular(10.r),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        title,
+                        style: Styles.style14.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(width: 5.w),
+                      Icon(Icons.star, color: kPrimaryColor, size: 14),
+                      SizedBox(width: 3.w),
+                      Text(
+                        "($rate)",
+                        style: Styles.style10.copyWith(color: kPrimaryColor),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "\$$price",
+                        style: Styles.style14.copyWith(
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '\$$offerPrice',
+                        style: Styles.style10.copyWith(
+                          decoration: TextDecoration.lineThrough,
+                          color: Color(0xffADADAD),
+                        ),
+                      ),
+
+                      CircleAvatar(
+                        radius: 12.r,
+                        backgroundColor: kPrimaryColor,
+                        child: Icon(
+                          BoxIcons.bx_plus,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-
-              Container(
-                padding: EdgeInsets.all(8.r),
-                decoration: BoxDecoration(
-                  color: Color(0xffD4DDDD),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(8.r),
-                    bottomRight: Radius.circular(8.r),
-                  ),
-                ),
-
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-
-                  children: [
-                    Row(
-                      children: [
-                        Text(title, style: Styles.style16),
-                        SizedBox(width: 10.w),
-                        Icon(Icons.star, color: kPrimaryColor, size: 10),
-                        SizedBox(width: 5.w),
-                        Text(
-                          "($rate)",
-                          style: Styles.style10.copyWith(color: kPrimaryColor),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "\$$price",
-                          style: Styles.style16.copyWith(
-                            color: kPrimaryColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          '\$$offerPrice',
-                          style: Styles.style14.copyWith(
-                            decoration: TextDecoration.lineThrough,
-                            color: Color(0xffADADAD),
-                          ),
-                        ),
-
-                        CircleAvatar(
-                          radius: 15.r,
-                          backgroundColor: kPrimaryColor,
-                          child: Icon(BoxIcons.bx_plus, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -40,16 +40,15 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                 Text('Log in your account', style: Styles.style24medium),
                 SizedBox(height: 25.h),
                 CustomTextField(
+                  isEmail: true,
                   hintText: 'Email',
                   controller: emailController,
-                  validator: MyValidators.emailValidator,
                 ),
                 SizedBox(height: 19.h),
                 CustomTextField(
                   hintText: 'Password',
                   isPassword: true,
                   controller: passwordController,
-                  validator: MyValidators.passwordValidator,
                 ),
                 Align(
                   alignment: Alignment.centerRight,
@@ -71,17 +70,19 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                     } else if (state is SignInFailure) {
                       ScaffoldMessenger.of(
                         context,
-                      ).showSnackBar(SnackBar(content: Text(state.error)));
+                      ).showSnackBar(SnackBar(content: Text(state.failure)));
                     }
                   },
                   builder: (context, state) {
                     return CustomAllUseButton(
                       title: 'Log in',
                       onPressed: () {
-                        final email = emailController.text;
-                        final password = passwordController.text;
+                        if (formKey.currentState!.validate()) {
+                          final email = emailController.text;
+                          final password = passwordController.text;
 
-                        context.read<SignInCubit>().signIn(email, password);
+                          context.read<SignInCubit>().signIn(email, password);
+                        }
                       },
                     );
                   },

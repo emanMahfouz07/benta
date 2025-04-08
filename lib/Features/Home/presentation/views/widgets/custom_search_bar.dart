@@ -9,7 +9,6 @@ class CustomSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.h,
       padding: EdgeInsets.only(right: 16.h),
       decoration: BoxDecoration(
         color: const Color(0xffF1F4F4),
@@ -17,7 +16,6 @@ class CustomSearchBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const SizedBox(width: 10),
           Expanded(
             child: TextField(
               decoration: InputDecoration(
@@ -30,7 +28,7 @@ class CustomSearchBar extends StatelessWidget {
               style: Styles.style16.copyWith(color: kLightGreyColor),
             ),
           ),
-          const Icon(Icons.mic_outlined, color: kPrimaryColor),
+          const Icon(Icons.camera_alt_outlined, color: kPrimaryColor),
         ],
       ),
     );

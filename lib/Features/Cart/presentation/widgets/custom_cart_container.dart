@@ -4,18 +4,40 @@ import 'package:benta/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomCartContainer extends StatelessWidget {
+class CustomCartContainer extends StatefulWidget {
   const CustomCartContainer({
     super.key,
     required this.title,
     required this.image,
     required this.rate,
     required this.price,
+    required this.onTotalChanged,
   });
+
   final String title;
   final String image;
   final double rate;
   final String price;
+  final Function(double) onTotalChanged;
+
+  @override
+  State<CustomCartContainer> createState() => _CustomCartContainerState();
+}
+
+class _CustomCartContainerState extends State<CustomCartContainer> {
+  int count = 1;
+
+  double get unitPrice => double.tryParse(widget.price) ?? 0;
+  double get totalPrice => unitPrice * count;
+
+  void updateCount(int newCount) {
+    setState(() {
+      count = newCount;
+    });
+
+    double total = unitPrice * newCount;
+    widget.onTotalChanged(total);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +48,6 @@ class CustomCartContainer extends StatelessWidget {
           Expanded(
             child: Container(
               height: 120.h,
-
               decoration: BoxDecoration(
                 color: kBGColor,
                 borderRadius: BorderRadius.only(
@@ -34,7 +55,6 @@ class CustomCartContainer extends StatelessWidget {
                   bottomLeft: Radius.circular(8.r),
                 ),
               ),
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -42,7 +62,7 @@ class CustomCartContainer extends StatelessWidget {
                     onPressed: () {},
                     icon: Icon(Icons.favorite_outline),
                   ),
-                  Flexible(child: Center(child: Image.asset(image))),
+                  Flexible(child: Center(child: Image.asset(widget.image))),
                 ],
               ),
             ),
@@ -57,7 +77,6 @@ class CustomCartContainer extends StatelessWidget {
                   bottomRight: Radius.circular(8.r),
                 ),
               ),
-
               child: Padding(
                 padding: EdgeInsets.all(8.0.r),
                 child: Column(
@@ -67,8 +86,8 @@ class CustomCartContainer extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
+                            widget.title,
                             softWrap: true,
-                            title,
                             style: Styles.style16.copyWith(
                               fontWeight: FontWeight.w500,
                             ),
@@ -79,7 +98,7 @@ class CustomCartContainer extends StatelessWidget {
                         SizedBox(width: 4.w),
                         Flexible(
                           child: Text(
-                            "($rate)",
+                            "(${widget.rate})",
                             style: Styles.style12.copyWith(
                               color: kPrimaryColor,
                             ),
@@ -93,7 +112,7 @@ class CustomCartContainer extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            "\$$price",
+                            "\$${totalPrice.toStringAsFixed(2)}",
                             softWrap: true,
                             style: Styles.style18.copyWith(
                               color: kPrimaryColor,
@@ -101,8 +120,7 @@ class CustomCartContainer extends StatelessWidget {
                             ),
                           ),
                         ),
-
-                        SmallCounter(),
+                        SmallCounter(onChanged: updateCount),
                       ],
                     ),
                     Spacer(),

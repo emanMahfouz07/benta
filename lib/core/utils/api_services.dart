@@ -8,7 +8,7 @@ class ApiServices {
 
   ApiServices(this.dio);
   Future<dynamic> get({required String endPoint}) async {
-    var response = await dio.get('$_baseurlFake$endPoint');
+    var response = await dio.get('$_baseurl$endPoint');
     return response.data;
   }
 

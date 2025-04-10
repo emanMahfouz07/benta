@@ -29,6 +29,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return SizedBox(
       height: 56.h,
       child: TextFormField(
+        textInputAction: TextInputAction.next,
         keyboardType:
             widget.isEmail ? TextInputType.emailAddress : TextInputType.text,
         controller: widget.controller,

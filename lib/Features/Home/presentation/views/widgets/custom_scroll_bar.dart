@@ -1,5 +1,5 @@
 import 'package:benta/Features/Home/data/models/categoty_model.dart';
-import 'package:benta/Features/Home/presentation/manager/categoryFilterCubit/category_filter_cubit_cubit.dart';
+import 'package:benta/Features/Home/presentation/manager/categoryFilterCubit/category_filter_cubit.dart';
 import 'package:benta/Features/Home/presentation/manager/cubit/get_item_cubit.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';
@@ -26,7 +26,11 @@ class _CategoryFilterState extends State<CategoryFilter> {
           if (state is CategoryFilterLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is CategoryFilterSuccess) {
-            final categories = [CategoryModel("All"), ...state.categories];
+            // final categories = [
+            //   CategoryModel(name: "All"),
+            //   ...state.categories,
+            // ];
+            final categories = List<CategoryModel>.from(state.categories);
 
             return ListView.builder(
               scrollDirection: Axis.horizontal,

@@ -60,9 +60,9 @@ class SignUpViewBody extends StatelessWidget {
                     if (state is SignUpSuccess) {
                       context.push(AppRouter.kHomeView);
                     } else if (state is SignUpFailure) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(state.error.message)),
-                      );
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(state.failure)));
                     }
                   },
                   builder: (context, state) {

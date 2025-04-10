@@ -13,6 +13,6 @@ final class SignUpSuccess extends SignUpState {
 }
 
 final class SignUpFailure extends SignUpState {
-  final ServerErrors error;
-  SignUpFailure(this.error);
+  final String failure;
+  SignUpFailure(this.failure);
 }

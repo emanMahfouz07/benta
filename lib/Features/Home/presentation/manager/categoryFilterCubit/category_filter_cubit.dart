@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:benta/core/utils/api_services.dart';
 
-part 'category_filter_cubit_state.dart';
+part 'category_filter_state.dart';
 
 class CategoryFilterCubit extends Cubit<CategoryFilterState> {
   final ApiServices api;
@@ -13,9 +13,14 @@ class CategoryFilterCubit extends Cubit<CategoryFilterState> {
   Future<void> getCategories() async {
     emit(CategoryFilterLoading());
     try {
-      final response = await api.get(endPoint: 'categories');
-      final List data = response as List;
-      final categories = data.map((e) => CategoryModel.fromJson(e)).toList();
+      final response = await api.get(endPoint: 'categories/get_categories.php');
+
+      final categoriesJson = response['categories'] as List;
+      final categories =
+          categoriesJson
+              .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
+              .toList();
+
       emit(CategoryFilterSuccess(categories));
     } catch (e) {
       emit(CategoryFilterFailure(e.toString()));

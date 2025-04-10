@@ -1,4 +1,4 @@
-part of 'category_filter_cubit_cubit.dart';
+part of 'category_filter_cubit.dart';
 
 @immutable
 sealed class CategoryFilterState {}

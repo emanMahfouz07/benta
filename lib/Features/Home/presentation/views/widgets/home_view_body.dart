@@ -1,4 +1,4 @@
-import 'package:benta/Features/Home/presentation/manager/categoryFilterCubit/category_filter_cubit_cubit.dart';
+import 'package:benta/Features/Home/presentation/manager/categoryFilterCubit/category_filter_cubit.dart';
 import 'package:benta/Features/Home/presentation/manager/cubit/get_item_cubit.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/home_app_bar.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/custom_item_container.dart';
@@ -56,8 +56,18 @@ class HomeViewBody extends StatelessWidget {
               child: const CategoryFilter(),
             ),
             SizedBox(height: 30.h),
-
-            BlocBuilder<GetItemCubit, GetItemState>(
+            BlocConsumer<GetItemCubit, GetItemState>(
+              listener: (context, state) {
+                if (state is GetItemFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Failed to load items: ${state.errorMessage}',
+                      ),
+                    ),
+                  );
+                }
+              },
               builder: (context, state) {
                 if (state is GetItemLoading) {
                   return Center(child: CircularProgressIndicator());
@@ -78,10 +88,6 @@ class HomeViewBody extends StatelessWidget {
                         );
                       },
                     ),
-                  );
-                } else if (state is GetItemFailure) {
-                  return Center(
-                    child: Text('Failed to load items: ${state.errorMessage}'),
                   );
                 } else {
                   return Center(child: Text('Select a category'));

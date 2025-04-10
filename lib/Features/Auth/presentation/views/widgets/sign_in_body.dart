@@ -41,14 +41,16 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                 SizedBox(height: 25.h),
                 CustomTextField(
                   isEmail: true,
-                  hintText: 'Email',
+                  hintText: 'Username',
                   controller: emailController,
+                  validator: MyValidators.displayNameValidator,
                 ),
                 SizedBox(height: 19.h),
                 CustomTextField(
                   hintText: 'Password',
                   isPassword: true,
                   controller: passwordController,
+                  validator: MyValidators.passwordValidator,
                 ),
                 Align(
                   alignment: Alignment.centerRight,

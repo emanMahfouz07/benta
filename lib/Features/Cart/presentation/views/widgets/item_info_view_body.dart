@@ -1,6 +1,6 @@
-import 'package:benta/Features/Cart/presentation/widgets/Item_info_bottom_sheet.dart';
-import 'package:benta/Features/Cart/presentation/widgets/custom_color_picker.dart';
-import 'package:benta/Features/Cart/presentation/widgets/custom_counter.dart';
+import 'package:benta/Features/Cart/presentation/views/widgets/Item_info_bottom_sheet.dart';
+import 'package:benta/Features/Cart/presentation/views/widgets/custom_color_picker.dart';
+import 'package:benta/Features/Cart/presentation/views/widgets/custom_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';

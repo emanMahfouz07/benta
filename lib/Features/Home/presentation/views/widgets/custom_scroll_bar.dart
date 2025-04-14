@@ -47,9 +47,7 @@ class _CategoryFilterState extends State<CategoryFilter> {
                       });
 
                       final selectedCategory = categories[index].name;
-                      print(
-                        "Category selected: $selectedCategory",
-                      ); // Debug print
+                      print("Category selected: $selectedCategory");
                       context.read<GetItemCubit>().getItemsByCategory(
                         selectedCategory,
                       );

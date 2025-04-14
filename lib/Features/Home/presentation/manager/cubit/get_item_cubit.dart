@@ -1,4 +1,4 @@
-import 'package:benta/Features/Home/data/models/item_model.dart';
+import 'package:benta/Features/Home/data/models/product_model.dart';
 import 'package:benta/core/utils/api_services.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';

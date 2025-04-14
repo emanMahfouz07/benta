@@ -1,4 +1,4 @@
-import 'package:benta/Features/Home/presentation/manager/categoryFilterCubit/category_filter_cubit.dart';
+import 'package:benta/Features/Cart/presentation/manager/add%20to%20cart%20cubit/add_to_cart_cubit.dart';
 import 'package:benta/Features/Home/presentation/manager/cubit/get_item_cubit.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/home_view_body.dart';
 import 'package:benta/core/utils/api_services.dart';
@@ -12,8 +12,11 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => GetItemCubit(ApiServices(Dio())),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => GetItemCubit(ApiServices(Dio()))),
+        BlocProvider(create: (_) => AddToCartCubit(ApiServices(Dio()))),
+      ],
       child: Scaffold(
         bottomNavigationBar: CustomBottomNavBar(),
         backgroundColor: Colors.white,

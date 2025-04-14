@@ -1,4 +1,4 @@
-import 'package:benta/Features/Cart/presentation/widgets/small_counter.dart';
+import 'package:benta/Features/Cart/presentation/views/widgets/small_counter.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:flutter/material.dart';

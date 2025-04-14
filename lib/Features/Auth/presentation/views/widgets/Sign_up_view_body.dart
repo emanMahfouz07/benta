@@ -46,6 +46,7 @@ class SignUpViewBody extends StatelessWidget {
                   isEmail: true,
                   controller: emailController,
                   validator: MyValidators.emailValidator,
+                  textInputType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: 20.h),
                 CustomTextField(

@@ -1,4 +1,4 @@
-import 'package:benta/Features/Cart/presentation/widgets/item_info_view_body.dart';
+import 'package:benta/Features/Cart/presentation/views/widgets/item_info_view_body.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 

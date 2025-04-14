@@ -5,14 +5,15 @@ import 'package:benta/Features/Auth/presentation/views/sign_up_view.dart';
 import 'package:benta/Features/Auth/presentation/views/verification_view.dart';
 import 'package:benta/Features/Favourite/presentation/views/fav_view.dart';
 import 'package:benta/Features/Home/presentation/views/home.dart';
-import 'package:benta/Features/Cart/presentation/item_info_view.dart';
-import 'package:benta/Features/Cart/presentation/my_cart_view.dart';
+import 'package:benta/Features/Cart/presentation/views/item_info_view.dart';
+import 'package:benta/Features/Cart/presentation/views/my_cart_view.dart';
 import 'package:benta/Features/Notification/presentation/views/choose_notification_view.dart';
 import 'package:benta/Features/Notification/presentation/views/notification_view.dart';
 import 'package:benta/Features/OnBoarding/onboarding_screen.dart';
 import 'package:benta/Features/Order/presentation/views/order_view.dart';
 import 'package:benta/Features/Profile/presentation/edit_profile_view.dart';
 import 'package:benta/Features/Profile/presentation/profile_view.dart';
+import 'package:benta/Features/Search/Presentation/view/search_view.dart';
 import 'package:benta/Features/Splash/presentation/logo.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,6 +27,7 @@ abstract class AppRouter {
   static const kHomeView = '/HomeView';
   static const kItemInfoView = '/ItemInfoView';
   static const kMyCartView = '/MyCartView';
+  static const kSearchView = '/SearchView';
   static const kProfileView = '/kProfileView';
   static const kOrderView = '/kOrderView';
   static const kFavouriteView = '/kFavouriteView';
@@ -91,6 +93,10 @@ abstract class AppRouter {
       GoRoute(
         path: kChooseNotificationView,
         builder: ((context, state) => const ChooseNotificationView()),
+      ),
+      GoRoute(
+        path: kSearchView,
+        builder: ((context, state) => const SearchView()),
       ),
     ],
   );

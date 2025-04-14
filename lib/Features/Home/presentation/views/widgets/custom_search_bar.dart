@@ -1,11 +1,14 @@
+import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomSearchBar extends StatelessWidget {
-  const CustomSearchBar({super.key, this.suffixIcon});
+  const CustomSearchBar({super.key, this.suffixIcon, this.customICon});
   final IconData? suffixIcon;
+  final IconData? customICon;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,18 +20,23 @@ class CustomSearchBar extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search, color: kLightGreyColor),
-                suffixIcon: Icon(suffixIcon),
-                suffixIconColor: kPrimaryColor,
-                hintText: "Search",
-                border: InputBorder.none,
+            child: GestureDetector(
+              onDoubleTap: () {
+                context.push(AppRouter.kSearchView);
+              },
+              child: TextField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search, color: kLightGreyColor),
+                  suffixIcon: Icon(suffixIcon),
+                  suffixIconColor: kPrimaryColor,
+                  hintText: "Search",
+                  border: InputBorder.none,
+                ),
+                style: Styles.style16.copyWith(color: kLightGreyColor),
               ),
-              style: Styles.style16.copyWith(color: kLightGreyColor),
             ),
           ),
-          const Icon(Icons.camera_alt_outlined, color: kPrimaryColor),
+          Icon(customICon, color: kPrimaryColor),
         ],
       ),
     );

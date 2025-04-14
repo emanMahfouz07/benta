@@ -52,6 +52,7 @@ class EditProfileViewBody extends StatelessWidget {
                   child: CustomTextField(
                     hintText: 'Phone',
                     controller: phoneController,
+                    textInputType: TextInputType.phone,
                   ),
                 ),
               ],
@@ -59,7 +60,11 @@ class EditProfileViewBody extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            CustomTextField(hintText: 'Email', controller: emailController),
+            CustomTextField(
+              hintText: 'Email',
+              controller: emailController,
+              textInputType: TextInputType.emailAddress,
+            ),
 
             const SizedBox(height: 16),
 

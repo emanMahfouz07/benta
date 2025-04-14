@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -9,6 +10,8 @@ class CustomTextField extends StatefulWidget {
     required this.controller,
     this.validator,
     this.isEmail = false,
+    this.textInputType,
+    this.inputFormatter,
   });
 
   final String hintText;
@@ -16,6 +19,8 @@ class CustomTextField extends StatefulWidget {
   final bool isEmail;
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final TextInputType? textInputType;
+  final List<TextInputFormatter>? inputFormatter;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -30,8 +35,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       height: 56.h,
       child: TextFormField(
         textInputAction: TextInputAction.next,
-        keyboardType:
-            widget.isEmail ? TextInputType.emailAddress : TextInputType.text,
+        inputFormatters: widget.inputFormatter,
+        keyboardType: widget.textInputType,
         controller: widget.controller,
         obscureText: widget.isPassword ? _isObscured : false,
         validator: widget.validator,

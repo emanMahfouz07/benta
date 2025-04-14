@@ -8,7 +8,7 @@ final class GetItemInitial extends GetItemState {}
 final class GetItemLoading extends GetItemState {}
 
 final class GetItemSuccess extends GetItemState {
-  final List<ItemModel> items;
+  final List<Product> items;
 
   GetItemSuccess(this.items);
 }

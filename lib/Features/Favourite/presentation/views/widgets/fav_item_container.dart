@@ -1,4 +1,3 @@
-import 'package:benta/Features/Cart/presentation/widgets/small_counter.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +75,7 @@ class FavouriteItemContainer extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: 8.w),
+
                         Icon(Icons.star, color: kPrimaryColor, size: 12.r),
                         SizedBox(width: 4.w),
                         Text(

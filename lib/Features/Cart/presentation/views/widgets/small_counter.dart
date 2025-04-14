@@ -49,7 +49,7 @@ class _SmallCounterState extends State<SmallCounter> {
               onTap: increment,
               child: Container(
                 width: 12.w,
-                height: 10.h,
+                height: 12.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(2.r),
                   color: Colors.white,
@@ -68,7 +68,7 @@ class _SmallCounterState extends State<SmallCounter> {
               onTap: decrement,
               child: Container(
                 width: 12.w,
-                height: 10.h,
+                height: 12.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(2),
                   color: Colors.white,

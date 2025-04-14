@@ -1,7 +1,10 @@
+import 'package:benta/core/utils/app_router.dart';
+import 'package:benta/core/utils/shared_pref.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:benta/core/utils/widgets/custom_all_use_button.dart';
 import 'package:benta/core/utils/widgets/custom_border_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void customLogoutDialog(BuildContext context) {
   showDialog(
@@ -25,7 +28,10 @@ void customLogoutDialog(BuildContext context) {
           CustomBorderButton(
             title: 'Log out',
             color: Color(0xffFFFFFF),
-            onPressed: () {},
+            onPressed: () async {
+              await SharedPrefsHelper.clearAll();
+              context.pushReplacement(AppRouter.kLoginView);
+            },
           ),
           SizedBox(height: 15),
           CustomAllUseButton(

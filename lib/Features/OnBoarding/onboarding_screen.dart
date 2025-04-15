@@ -1,6 +1,7 @@
 import 'package:benta/Features/OnBoarding/onboardingmodel.dart';
 import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/constants.dart';
+import 'package:benta/core/utils/shared_pref.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,14 +11,14 @@ import 'package:introduction_screen/introduction_screen.dart';
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
 
-  void _onDone(BuildContext context) {
+  void _onDone(BuildContext context) async {
+    await SharedPrefsHelper.setFirstTime(false);
+
     context.go(AppRouter.kLoginView);
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -96,6 +97,7 @@ class OnboardingView extends StatelessWidget {
                         'Done',
                         style: Styles.style18.copyWith(color: Colors.white),
                       ),
+
                       const Icon(Icons.arrow_forward_ios, color: Colors.white),
                     ],
                   ),

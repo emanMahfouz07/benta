@@ -6,6 +6,7 @@ import 'package:benta/core/utils/api_services.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/widgets/custom_all_use_button.dart';
 import 'package:benta/core/utils/widgets/custom_app_bar.dart';
+import 'package:benta/core/utils/widgets/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,8 @@ class MyCartViewBody extends StatefulWidget {
 }
 
 class _MyCartViewBodyState extends State<MyCartViewBody> {
+  double totalPrice = 0.0;
+
   @override
   void initState() {
     super.initState();
@@ -32,11 +35,20 @@ class _MyCartViewBodyState extends State<MyCartViewBody> {
     final prefs = await SharedPreferences.getInstance();
     final userId = prefs.getInt('user_id');
 
+    if (!mounted)
+      return; // this to check if we still in the same screen (not navigating to another)
+
     if (userId != null) {
       context.read<CartItemCubit>().getCartItems(userId: userId);
-    } else {
-      print('⚠️ User ID not found in SharedPreferences');
-      // Optionally show a label/snackbar or navigate to login
+      final cartItems =
+          context.read<CartItemCubit>().state is CartItemSuccess
+              ? (context.read<CartItemCubit>().state as CartItemSuccess)
+                  .cartItems
+              : const <CartItem>[];
+
+      setState(() {
+        totalPrice = _calculateTotalPrice(cartItems);
+      });
     }
   }
 
@@ -83,7 +95,36 @@ class _MyCartViewBodyState extends State<MyCartViewBody> {
                                       topRight: Radius.circular(8.r),
                                       bottomRight: Radius.circular(8.r),
                                     ),
-                                    onPressed: (_) async {},
+                                    onPressed: (_) async {
+                                      final prefs =
+                                          await SharedPreferences.getInstance();
+                                      final userId = prefs.getInt('user_id');
+
+                                      if (userId != null) {
+                                        try {
+                                          await ApiServices(
+                                            Dio(),
+                                          ).deleteCartItem(
+                                            userId: userId,
+                                            cartItemId: item.id,
+                                          );
+                                          context
+                                              .read<CartItemCubit>()
+                                              .getCartItems(userId: userId);
+                                          showFlashbar(
+                                            icon: Icons.check_circle,
+                                            message: 'Item removed from cart',
+                                            backgroundColor: Colors.green,
+                                          );
+                                        } catch (e) {
+                                          showFlashbar(
+                                            icon: Icons.cancel,
+                                            message: 'Failed to remove item',
+                                            backgroundColor: Colors.red,
+                                          );
+                                        }
+                                      }
+                                    },
                                     backgroundColor: kPrimaryColor,
                                     foregroundColor: Colors.white,
                                     icon: FontAwesome.trash_can,
@@ -91,13 +132,14 @@ class _MyCartViewBodyState extends State<MyCartViewBody> {
                                 ],
                               ),
                               child: CustomCartContainer(
+                                cartItemId: item.id,
                                 title: item.name,
                                 image:
                                     'assets/images/mandi-arm-chair-in-cream 2.png',
                                 rate: 4.4,
                                 price: item.price,
-
-                                onTotalChanged: (newTotal) {},
+                                quantity: item.quantity,
+                                onTotalChanged: (newQuantity) {},
                               ),
                             );
                           },
@@ -118,7 +160,7 @@ class _MyCartViewBodyState extends State<MyCartViewBody> {
                       ],
                     );
                   } else {
-                    return const SizedBox();
+                    return const CircularProgressIndicator();
                   }
                 },
               ),

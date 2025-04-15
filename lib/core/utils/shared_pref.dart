@@ -1,3 +1,4 @@
+import 'package:benta/Features/Auth/data/models/sign_in_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsHelper {
@@ -31,5 +32,44 @@ class SharedPrefsHelper {
 
   static bool isInitialized() {
     return _prefs != null;
+  }
+
+  Future<void> saveUserData(UserSignInModel user) async {
+    await SharedPrefsHelper.setUserId(user.user.id);
+    await SharedPrefsHelper.setToken(user.token);
+  }
+
+  static Future<void> setFirstTime(bool value) async {
+    await _prefs.setBool('is_first_time', value);
+  }
+
+  static bool isFirstTime() {
+    return _prefs.getBool('is_first_time') ?? true;
+  }
+
+  static Future<void> saveFavoriteItems(List<String> itemIds) async {
+    await _prefs.setStringList('favorite_items', itemIds);
+  }
+
+  static List<String> getFavoriteItems() {
+    return _prefs.getStringList('favorite_items') ?? [];
+  }
+
+  static Future<void> addFavoriteItem(String itemId) async {
+    final favorites = getFavoriteItems();
+    if (!favorites.contains(itemId)) {
+      favorites.add(itemId);
+      await saveFavoriteItems(favorites);
+    }
+  }
+
+  static Future<void> removeFavoriteItem(String itemId) async {
+    final favorites = getFavoriteItems();
+    favorites.remove(itemId);
+    await saveFavoriteItems(favorites);
+  }
+
+  static bool isFavorite(String itemId) {
+    return getFavoriteItems().contains(itemId);
   }
 }

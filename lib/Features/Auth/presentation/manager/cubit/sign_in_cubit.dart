@@ -5,8 +5,6 @@ import 'package:benta/core/utils/shared_pref.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 part 'sign_in_state.dart';
 
 class SignInCubit extends Cubit<SignInState> {
@@ -29,14 +27,13 @@ class SignInCubit extends Cubit<SignInState> {
           await SharedPrefsHelper.init();
         }
 
-        // ✅ Save ID and token first
         await SharedPrefsHelper.setUserId(user.user.id);
         await SharedPrefsHelper.setToken(response.data["token"]);
 
-        // ✅ Now read and print
         print("Saving user ID: ${user.user.id}");
         print("Saved user ID: ${SharedPrefsHelper.getUserId()}");
         print("Saved token: ${SharedPrefsHelper.getToken()}");
+        await SharedPrefsHelper().saveUserData(user);
 
         emit(SignInSuccess(user));
       } else {

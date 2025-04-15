@@ -24,10 +24,11 @@ class CartItemCubit extends Cubit<CartItemState> {
         );
         emit(CartItemSuccess(items));
       } else {
-        emit(CartItemFailure('Server returned failure status.'));
+        final errorMsg = response.data["message"];
+
+        emit(CartItemFailure(errorMsg));
       }
     } catch (e) {
-      print('Error loading cart items: $e');
       emit(CartItemFailure('Failed to load cart items'));
     }
   }

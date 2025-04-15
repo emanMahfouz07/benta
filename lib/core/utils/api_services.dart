@@ -41,7 +41,6 @@ class ApiServices {
         throw Exception('Failed: ${data['status']}');
       }
     } catch (e) {
-      print('Error: $e');
       throw Exception('Failed to load products');
     }
   }
@@ -52,18 +51,43 @@ class ApiServices {
   }) async {
     try {
       final response = await dio.delete(
-        '${_baseUrl}cart/cart.php?user_id=$userId',
-        queryParameters: {'user_id': userId, 'cart_item_id': cartItemId},
+        '${_baseUrl}cart/cart.php',
+        queryParameters: {'user_id': userId},
+        data: {'cart_id': cartItemId},
+        options: Options(headers: {'Content-Type': 'application/json'}),
       );
 
-      print('API Response: ${response.data}'); // Log the response
+      print('API Response: ${response.data}');
 
       if (response.data['status'] != 'success') {
         throw Exception('Failed to delete item');
       }
     } catch (e) {
-      print('Delete error: $e');
       throw Exception('Failed to delete item');
+    }
+  }
+
+  Future<void> updateCartItemQuantity({
+    required int userId,
+    required int cartItemId,
+    required int quantity,
+  }) async {
+    try {
+      final response = await dio.put(
+        '${_baseUrl}cart/cart.php',
+        queryParameters: {'user_id': userId},
+        data: {'cart_id': cartItemId, 'quantity': quantity},
+        options: Options(headers: {'Content-Type': 'application/json'}),
+      );
+
+      print('Update response: ${response.data}');
+
+      if (response.data['status'] != 'success') {
+        throw Exception('Failed to update quantity');
+      }
+    } catch (e) {
+      print('Update quantity error: $e');
+      throw Exception('Failed to update quantity');
     }
   }
 }

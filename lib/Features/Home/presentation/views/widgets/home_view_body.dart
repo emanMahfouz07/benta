@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:benta/Features/Cart/data/models/add_to_cart.dart';
 import 'package:benta/Features/Cart/presentation/manager/add%20to%20cart%20cubit/add_to_cart_cubit.dart';
 import 'package:benta/Features/Home/presentation/manager/categoryFilterCubit/category_filter_cubit.dart';
@@ -102,11 +101,20 @@ class HomeViewBody extends StatelessWidget {
                               item.images.isNotEmpty
                                   ? getFullImageUrl(item.images.last)
                                   : 'https://pngimg.com/uploads/chair/chair_PNG6905.png',
-                          onFavoriteChanged: (isFavorite) {},
+                          onFavoriteChanged: (isFavorite) async {
+                            final itemId = item.id.toString();
+                            if (SharedPrefsHelper.isFavorite(itemId)) {
+                              await SharedPrefsHelper.removeFavoriteItem(
+                                itemId,
+                              );
+                            } else {
+                              await SharedPrefsHelper.addFavoriteItem(itemId);
+                            }
+                          },
+
                           onAddToCart: () {
                             final userId = SharedPrefsHelper.getUserId();
                             if (userId != null) {
-                              // Use AddToCartCubit to add item to the cart
                               context.read<AddToCartCubit>().addToCart(
                                 AddToCartModel(
                                   userId: userId,
@@ -115,10 +123,16 @@ class HomeViewBody extends StatelessWidget {
                                 ),
                               );
 
-                              showFlashbar().show(context);
+                              showFlashbar(
+                                message: 'Item added Successfully!',
+                                backgroundColor: Colors.green,
+                                icon: Icons.check_circle,
+                              ).show(context);
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Please log in first")),
+                              showFlashbar(
+                                message: 'Please log in first',
+                                backgroundColor: Colors.redAccent,
+                                icon: Icons.error,
                               );
                             }
                           },

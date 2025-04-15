@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SmallCounter extends StatefulWidget {
-  const SmallCounter({super.key, this.onChanged});
-  final ValueChanged<int>? onChanged; //
+  const SmallCounter({super.key, this.onChanged, required this.initialCount});
+  final ValueChanged<int>? onChanged;
+  final int initialCount;
 
   @override
   State<SmallCounter> createState() => _SmallCounterState();
@@ -28,6 +29,12 @@ class _SmallCounterState extends State<SmallCounter> {
       });
       widget.onChanged?.call(count);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    count = widget.initialCount;
   }
 
   @override

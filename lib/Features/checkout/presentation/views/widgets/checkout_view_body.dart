@@ -21,7 +21,7 @@ class CheckoutViewBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 40.h),
-
+            CustomTextField(hintText: 'Address', controller: addressController),
             SizedBox(height: 24.h),
             CustomTextField(hintText: 'Full Name', controller: nameController),
 
@@ -66,12 +66,14 @@ class CheckoutViewBody extends StatelessWidget {
             ),
 
             const SizedBox(height: 16),
+            CustomTextField(hintText: 'City', controller: addressController),
+            const SizedBox(height: 16),
 
             CustomTextField(hintText: 'Address', controller: addressController),
 
             const SizedBox(height: 32),
 
-            CustomAllUseButton(title: 'Save', onPressed: () {}),
+            CustomAllUseButton(title: 'Continue', onPressed: () {}),
 
             const SizedBox(height: 24),
           ],

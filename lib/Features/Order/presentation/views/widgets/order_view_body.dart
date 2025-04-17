@@ -53,6 +53,7 @@ class OrderViewBody extends StatelessWidget {
                   rate: '4.5',
                   isFavorite: false,
                   onFavChange: () {},
+                  onAddToCart: () {},
                 );
               },
             ),

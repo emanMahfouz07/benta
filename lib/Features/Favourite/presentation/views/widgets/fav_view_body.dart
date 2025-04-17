@@ -65,6 +65,7 @@ class FavouriteViewBody extends StatelessWidget {
                   rate: item['rate'],
                   isFavorite: false,
                   onFavChange: () {},
+                  onAddToCart: () {},
                 );
               },
             ),

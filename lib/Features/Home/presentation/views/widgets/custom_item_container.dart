@@ -89,7 +89,7 @@ class _CustomItemContainerState extends State<CustomItemContainer> {
                             _isFavorite
                                 ? Icons.favorite
                                 : Icons.favorite_border,
-                            color: _isFavorite ? Colors.red : kPrimaryColor,
+                            color: _isFavorite ? kPrimaryColor : kPrimaryColor,
                             size: 18,
                           ),
                           onPressed: () {

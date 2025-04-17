@@ -1,4 +1,5 @@
 import 'package:benta/Features/Profile/presentation/widgets/edit_profile_view_body.dart';
+import 'package:benta/Features/checkout/presentation/views/widgets/checkout_view_body.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,14 +21,14 @@ class CheckoutView extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            title: Text('My Profile', style: Styles.style24medium),
+            title: Text('Place Order', style: Styles.style24medium),
             backgroundColor: Colors.transparent,
             centerTitle: true,
             elevation: 0,
           ),
         ),
       ),
-      body: EditProfileViewBody(),
+      body: CheckoutViewBody(),
     );
   }
 }

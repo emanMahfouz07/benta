@@ -11,6 +11,7 @@ class FavouriteItemContainer extends StatefulWidget {
   final String image;
   final bool isFavorite;
   final void Function() onFavChange;
+  final VoidCallback onAddToCart;
 
   const FavouriteItemContainer({
     super.key,
@@ -20,6 +21,7 @@ class FavouriteItemContainer extends StatefulWidget {
     required this.image,
     required this.isFavorite,
     required this.onFavChange,
+    required this.onAddToCart,
   });
 
   @override
@@ -63,7 +65,7 @@ class _FavouriteItemContainerState extends State<FavouriteItemContainer> {
                     },
                     icon: Icon(
                       _isFavorite ? Icons.favorite : Icons.favorite_outline,
-                      color: _isFavorite ? Colors.red : Colors.grey,
+                      color: _isFavorite ? kPrimaryColor : Colors.grey,
                     ),
                   ),
                   Flexible(
@@ -102,10 +104,15 @@ class _FavouriteItemContainerState extends State<FavouriteItemContainer> {
                         SizedBox(width: 8.w),
                         Icon(Icons.star, color: kPrimaryColor, size: 12.r),
                         SizedBox(width: 4.w),
-                        Text(
-                          overflow: TextOverflow.ellipsis,
-                          "(${widget.rate})",
-                          style: Styles.style12.copyWith(color: kPrimaryColor),
+                        Flexible(
+                          child: Text(
+                            overflow: TextOverflow.ellipsis,
+                            "(${widget.rate})",
+
+                            style: Styles.style12.copyWith(
+                              color: kPrimaryColor,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -116,6 +123,7 @@ class _FavouriteItemContainerState extends State<FavouriteItemContainer> {
                           child: Text(
                             "\$${widget.price}",
                             softWrap: true,
+
                             style: Styles.style18.copyWith(
                               color: kPrimaryColor,
                               fontWeight: FontWeight.w600,
@@ -124,12 +132,15 @@ class _FavouriteItemContainerState extends State<FavouriteItemContainer> {
                         ),
                         Spacer(),
                         CircleAvatar(
-                          radius: 15.r,
+                          radius: 18.r,
                           backgroundColor: kPrimaryColor,
-                          child: Icon(
-                            BoxIcons.bx_plus,
-                            color: Colors.white,
-                            size: 18,
+                          child: IconButton(
+                            icon: Icon(
+                              BoxIcons.bx_plus,
+                              size: 18.r,
+                              color: Colors.white,
+                            ),
+                            onPressed: widget.onAddToCart,
                           ),
                         ),
                       ],

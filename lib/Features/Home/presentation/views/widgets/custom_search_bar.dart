@@ -54,6 +54,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
         children: [
           Expanded(
             child: TextField(
+              cursorColor: kPrimaryColor,
               controller: _controller,
               onTap: widget.onTap,
               onChanged: widget.onSearchChanged,

@@ -6,9 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ItemInfoBottomSheet extends StatelessWidget {
-  const ItemInfoBottomSheet({super.key, required this.imageList});
+  const ItemInfoBottomSheet({
+    super.key,
+    required this.imageList,
+    required this.title,
+    required this.desc,
+    required this.price,
+  });
 
   final List<String> imageList;
+  final String title;
+  final String desc;
+  final String price;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +31,7 @@ class ItemInfoBottomSheet extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('Modern chair', style: Styles.style24medium),
+                Text(title, style: Styles.style24medium),
                 SizedBox(width: 10),
                 Icon(Icons.star, color: kPrimaryColor, size: 16),
                 SizedBox(width: 5),
@@ -32,7 +41,7 @@ class ItemInfoBottomSheet extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  "\$100",
+                  "\$$price",
                   style: Styles.style18.copyWith(
                     color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
@@ -44,7 +53,7 @@ class ItemInfoBottomSheet extends StatelessWidget {
             Text('Details', style: Styles.style16),
             Text(
               softWrap: true,
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+              desc,
               style: Styles.style14.copyWith(color: kLightGreyColor),
             ),
             SizedBox(height: 15),

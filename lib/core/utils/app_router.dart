@@ -15,6 +15,7 @@ import 'package:benta/Features/Profile/presentation/edit_profile_view.dart';
 import 'package:benta/Features/Profile/presentation/profile_view.dart';
 import 'package:benta/Features/Search/Presentation/view/search_view.dart';
 import 'package:benta/Features/Splash/presentation/logo.dart';
+import 'package:benta/Features/checkout/presentation/views/checkout_view.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
@@ -33,6 +34,8 @@ abstract class AppRouter {
   static const kFavouriteView = '/kFavouriteView';
   static const kNotificationView = '/kNotificationView';
   static const kEditProfileView = '/kEditProfileView';
+  static const kCheckoutView = '/CheckoutView';
+
   static const kChooseNotificationView = '/kChooseNotificationView';
   static final router = GoRouter(
     routes: [
@@ -97,6 +100,10 @@ abstract class AppRouter {
       GoRoute(
         path: kSearchView,
         builder: ((context, state) => const SearchView()),
+      ),
+      GoRoute(
+        path: kCheckoutView,
+        builder: ((context, state) => const CheckoutView()),
       ),
     ],
   );

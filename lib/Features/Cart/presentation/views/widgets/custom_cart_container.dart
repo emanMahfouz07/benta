@@ -2,6 +2,7 @@ import 'package:benta/Features/Cart/presentation/views/widgets/small_counter.dar
 import 'package:benta/core/utils/api_services.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';
+import 'package:benta/core/utils/widgets/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -152,10 +153,10 @@ class _CustomCartContainerState extends State<CustomCartContainer> {
                                   quantity: newQuantity,
                                 );
                               } catch (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Failed to update quantity'),
-                                  ),
+                                showFlashbar(
+                                  message: 'Failed to update quantity',
+                                  backgroundColor: Colors.redAccent,
+                                  icon: Icons.error,
                                 );
                               }
                             }

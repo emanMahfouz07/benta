@@ -3,6 +3,7 @@ import 'package:benta/Features/Cart/presentation/manager/Cart%20Item/cart_item_c
 import 'package:benta/Features/Cart/presentation/views/widgets/custom_cart_container.dart';
 import 'package:benta/Features/Cart/presentation/views/widgets/total_price_container.dart';
 import 'package:benta/core/utils/api_services.dart';
+import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/widgets/custom_all_use_button.dart';
 import 'package:benta/core/utils/widgets/custom_app_bar.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -155,7 +157,9 @@ class _MyCartViewBodyState extends State<MyCartViewBody> {
                         SizedBox(height: 25.h),
                         CustomAllUseButton(
                           title: 'Check out',
-                          onPressed: () {},
+                          onPressed: () {
+                            context.push(AppRouter.kCheckoutView);
+                          },
                         ),
                       ],
                     );

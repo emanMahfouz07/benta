@@ -17,22 +17,37 @@ class CustomItemContainer extends StatefulWidget {
 
     required this.onAddToCart,
     required this.isFavorite,
+    required this.id,
   });
 
   final String title;
   final String price;
   final String rate;
   final String image;
-  final ValueChanged<bool> onFavoriteChanged;
-  final VoidCallback onAddToCart;
   final bool isFavorite;
+  final Function(bool) onFavoriteChanged;
+  final VoidCallback onAddToCart;
+  final int id;
 
   @override
   State<CustomItemContainer> createState() => _CustomItemContainerState();
 }
 
 class _CustomItemContainerState extends State<CustomItemContainer> {
-  bool isFavorite = false;
+  late bool _isFavorite;
+  @override
+  void initState() {
+    super.initState();
+    _isFavorite = widget.isFavorite;
+  }
+
+  @override
+  void didUpdateWidget(CustomItemContainer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isFavorite != widget.isFavorite) {
+      _isFavorite = widget.isFavorite;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +57,7 @@ class _CustomItemContainerState extends State<CustomItemContainer> {
         children: [
           GestureDetector(
             onTap: () {
-              context.push(AppRouter.kItemInfoView);
+              context.push(AppRouter.kItemInfoView, extra: {'id': widget.id});
             },
             child: Container(
               width: 127.w,
@@ -62,25 +77,26 @@ class _CustomItemContainerState extends State<CustomItemContainer> {
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          isFavorite = !isFavorite;
+                          _isFavorite = !_isFavorite;
                         });
-                        widget.onFavoriteChanged(isFavorite);
+                        widget.onFavoriteChanged(_isFavorite);
                       },
                       child: CircleAvatar(
-                        radius: 16,
+                        radius: 17,
                         backgroundColor: Colors.white,
                         child: IconButton(
                           icon: Icon(
-                            isFavorite
-                                ? FontAwesome.heart_solid
-                                : FontAwesome.heart,
-                            size: 17,
+                            _isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: _isFavorite ? Colors.red : kPrimaryColor,
+                            size: 18,
                           ),
                           onPressed: () {
                             setState(() {
-                              isFavorite = !isFavorite;
+                              _isFavorite = !_isFavorite;
                             });
-                            widget.onFavoriteChanged(isFavorite);
+                            widget.onFavoriteChanged(_isFavorite);
                           },
                         ),
                       ),

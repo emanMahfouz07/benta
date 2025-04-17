@@ -1,13 +1,17 @@
+import 'package:benta/Features/Cart/presentation/manager/cubit/product_cubit.dart';
 import 'package:benta/Features/Cart/presentation/views/widgets/Item_info_bottom_sheet.dart';
 import 'package:benta/Features/Cart/presentation/views/widgets/custom_color_picker.dart';
 import 'package:benta/Features/Cart/presentation/views/widgets/custom_counter.dart';
+import 'package:benta/core/utils/widgets/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:imageview360/imageview360.dart';
 
 class ItemInfoViewBody extends StatefulWidget {
-  const ItemInfoViewBody({super.key});
+  const ItemInfoViewBody({super.key, required this.productId});
+  final int productId;
 
   @override
   State<ItemInfoViewBody> createState() => _ItemInfoViewBodyState();
@@ -20,6 +24,7 @@ class _ItemInfoViewBodyState extends State<ItemInfoViewBody> {
   void initState() {
     super.initState();
     loadImages();
+    context.read<ProductCubit>().fetchProductInfo(widget.productId.toString());
   }
 
   void loadImages() {
@@ -34,68 +39,89 @@ class _ItemInfoViewBodyState extends State<ItemInfoViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> smallImageList = [
-      'assets/images/Rectangle 47.png',
-      'assets/images/Rectangle 48.png',
-    ];
+    return BlocBuilder<ProductCubit, ProductState>(
+      builder: (context, state) {
+        if (state is ProductLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is ProductFailure) {
+          return showFlashbar(
+            message: state.error,
+            backgroundColor: Colors.redAccent,
+            icon: Icons.error,
+          );
+        } else if (state is ProductSuccesss) {
+          final product = state.productList;
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(top: 40.h, left: 24.w, right: 24.w),
+              child: SafeArea(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.only(top: 40.h, left: 24.w, right: 24.w),
-        child: SafeArea(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          context.pop();
-                        },
-                        icon: Icon(Icons.arrow_back_ios),
-                      ),
-                      Spacer(),
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.favorite_outline),
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                context.pop();
+                              },
+                              icon: Icon(Icons.arrow_back_ios),
+                            ),
+                            Spacer(),
+                            CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.favorite_outline),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      ColorPicker(),
+                        Row(
+                          children: [
+                            ColorPicker(),
 
-                      Center(
-                        child: SizedBox(
-                          width: 250.w,
-                          height: 340.h,
-                          child: ImageView360(
-                            key: UniqueKey(),
-                            imageList: imageList,
-                            autoRotate: true,
-                            rotationCount: 2,
-                            swipeSensitivity: 2,
-                          ),
+                            Center(
+                              child: SizedBox(
+                                width: 250.w,
+                                height: 340.h,
+                                child: ImageView360(
+                                  key: UniqueKey(),
+                                  imageList: imageList,
+                                  autoRotate: true,
+                                  rotationCount: 2,
+                                  swipeSensitivity: 2,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
 
-                  ItemInfoBottomSheet(imageList: smallImageList),
-                ],
+                        ItemInfoBottomSheet(
+                          imageList: product.images,
+                          title: product.name,
+                          desc: product.description,
+                          price: product.price.toString(),
+                        ),
+                      ],
+                    ),
+                    CustomCounter(),
+                  ],
+                ),
               ),
-              CustomCounter(),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        } else {
+          return showFlashbar(
+            message: 'Unknow Error',
+            backgroundColor: Colors.redAccent,
+            icon: Icons.error,
+          );
+        }
+      },
     );
   }
 }

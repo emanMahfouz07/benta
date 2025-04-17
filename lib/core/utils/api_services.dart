@@ -94,7 +94,6 @@ class ApiServices {
         '${_baseUrl}cart/cart.php',
         queryParameters: {'user_id': userId},
         data: {'cart_id': cartItemId, 'quantity': quantity},
-        options: Options(headers: {'Content-Type': 'application/json'}),
       );
 
       print('Update response: ${response.data}');

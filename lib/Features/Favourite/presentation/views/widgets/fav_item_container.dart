@@ -10,7 +10,7 @@ class FavouriteItemContainer extends StatefulWidget {
   final String rate;
   final String image;
   final bool isFavorite;
-  final void Function() onFavChange; // Make it a required callback
+  final void Function() onFavChange;
 
   const FavouriteItemContainer({
     super.key,
@@ -19,7 +19,7 @@ class FavouriteItemContainer extends StatefulWidget {
     required this.rate,
     required this.image,
     required this.isFavorite,
-    required this.onFavChange, // This should be required
+    required this.onFavChange,
   });
 
   @override
@@ -32,8 +32,7 @@ class _FavouriteItemContainerState extends State<FavouriteItemContainer> {
   @override
   void initState() {
     super.initState();
-    _isFavorite =
-        widget.isFavorite; // Set initial state based on the passed value
+    _isFavorite = widget.isFavorite;
   }
 
   @override
@@ -58,11 +57,9 @@ class _FavouriteItemContainerState extends State<FavouriteItemContainer> {
                   IconButton(
                     onPressed: () {
                       setState(() {
-                        _isFavorite =
-                            !_isFavorite; // Toggle the favorite state locally
+                        _isFavorite = !_isFavorite;
                       });
-                      widget
-                          .onFavChange(); // Call the external callback to update parent state
+                      widget.onFavChange();
                     },
                     icon: Icon(
                       _isFavorite ? Icons.favorite : Icons.favorite_outline,

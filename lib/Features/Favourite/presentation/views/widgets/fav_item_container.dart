@@ -4,18 +4,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class FavouriteItemContainer extends StatelessWidget {
+class FavouriteItemContainer extends StatefulWidget {
+  final String title;
+  final String price;
+  final String rate;
+  final String image;
+  final bool isFavorite;
+  final void Function() onFavChange; // Make it a required callback
+
   const FavouriteItemContainer({
     super.key,
     required this.title,
-    required this.image,
-    required this.rate,
     required this.price,
+    required this.rate,
+    required this.image,
+    required this.isFavorite,
+    required this.onFavChange, // This should be required
   });
-  final String title;
-  final String image;
-  final double rate;
-  final String price;
+
+  @override
+  State<FavouriteItemContainer> createState() => _FavouriteItemContainerState();
+}
+
+class _FavouriteItemContainerState extends State<FavouriteItemContainer> {
+  late bool _isFavorite;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavorite =
+        widget.isFavorite; // Set initial state based on the passed value
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +45,6 @@ class FavouriteItemContainer extends StatelessWidget {
           Expanded(
             child: Container(
               height: 120.h,
-
               decoration: BoxDecoration(
                 color: kBGColor,
                 borderRadius: BorderRadius.only(
@@ -34,16 +52,27 @@ class FavouriteItemContainer extends StatelessWidget {
                   bottomLeft: Radius.circular(8.r),
                 ),
               ),
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.favorite_outline),
+                    onPressed: () {
+                      setState(() {
+                        _isFavorite =
+                            !_isFavorite; // Toggle the favorite state locally
+                      });
+                      widget
+                          .onFavChange(); // Call the external callback to update parent state
+                    },
+                    icon: Icon(
+                      _isFavorite ? Icons.favorite : Icons.favorite_outline,
+                      color: _isFavorite ? Colors.red : Colors.grey,
+                    ),
                   ),
                   Flexible(
-                    child: Center(child: Image.asset(image, fit: BoxFit.cover)),
+                    child: Center(
+                      child: Image.network(widget.image, fit: BoxFit.cover),
+                    ),
                   ),
                 ],
               ),
@@ -59,7 +88,6 @@ class FavouriteItemContainer extends StatelessWidget {
                   bottomRight: Radius.circular(8.r),
                 ),
               ),
-
               child: Padding(
                 padding: EdgeInsets.all(8.r),
                 child: Column(
@@ -69,29 +97,27 @@ class FavouriteItemContainer extends StatelessWidget {
                       children: [
                         Text(
                           softWrap: true,
-                          title,
+                          widget.title,
                           style: Styles.style16.copyWith(
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         SizedBox(width: 8.w),
-
                         Icon(Icons.star, color: kPrimaryColor, size: 12.r),
                         SizedBox(width: 4.w),
                         Text(
                           overflow: TextOverflow.ellipsis,
-                          "($rate)",
+                          "(${widget.rate})",
                           style: Styles.style12.copyWith(color: kPrimaryColor),
                         ),
                       ],
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Flexible(
                           child: Text(
-                            "\$$price",
+                            "\$${widget.price}",
                             softWrap: true,
                             style: Styles.style18.copyWith(
                               color: kPrimaryColor,

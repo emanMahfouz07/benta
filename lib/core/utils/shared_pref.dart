@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPrefsHelper {
   static late SharedPreferences _prefs;
 
+  /// Call this once before using any prefs method (usually in main)
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
   }
@@ -16,12 +17,10 @@ class SharedPrefsHelper {
     return _prefs.getInt('user_id');
   }
 
-  // Save auth token
   static Future<void> setToken(String token) async {
     await _prefs.setString('auth_token', token);
   }
 
-  // Get auth token
   static String? getToken() {
     return _prefs.getString('auth_token');
   }
@@ -35,8 +34,8 @@ class SharedPrefsHelper {
   }
 
   Future<void> saveUserData(UserSignInModel user) async {
-    await SharedPrefsHelper.setUserId(user.user.id);
-    await SharedPrefsHelper.setToken(user.token);
+    await setUserId(user.user.id);
+    await setToken(user.token);
   }
 
   static Future<void> setFirstTime(bool value) async {
@@ -47,14 +46,18 @@ class SharedPrefsHelper {
     return _prefs.getBool('is_first_time') ?? true;
   }
 
-  static Future<void> saveFavoriteItems(List<String> itemIds) async {
-    await _prefs.setStringList('favorite_items', itemIds);
-  }
-
   static List<String> getFavoriteItems() {
-    return _prefs.getStringList('favorite_items') ?? [];
+    final items = _prefs.getStringList('favorite_items');
+    return items ?? [];
   }
 
+  /// Save the full list
+  static Future<void> saveFavoriteItems(List<String> items) async {
+    await _prefs.setStringList('favorite_items', items);
+    print("💾 Saved to prefs: $items");
+  }
+
+  /// Add item if it's not already in list
   static Future<void> addFavoriteItem(String itemId) async {
     final favorites = getFavoriteItems();
     if (!favorites.contains(itemId)) {
@@ -63,13 +66,18 @@ class SharedPrefsHelper {
     }
   }
 
+  /// Remove item if exists
   static Future<void> removeFavoriteItem(String itemId) async {
     final favorites = getFavoriteItems();
-    favorites.remove(itemId);
-    await saveFavoriteItems(favorites);
+    if (favorites.contains(itemId)) {
+      favorites.remove(itemId);
+      await saveFavoriteItems(favorites);
+    }
   }
 
-  static bool isFavorite(String itemId) {
-    return getFavoriteItems().contains(itemId);
+  static bool isFavorite(String id) {
+    final favs = getFavoriteItems();
+    final result = favs.contains(id);
+    return result;
   }
 }

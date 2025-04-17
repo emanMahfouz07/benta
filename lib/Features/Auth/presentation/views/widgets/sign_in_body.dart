@@ -5,7 +5,6 @@ import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/auth_validation.dart';
 import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/helper_class.dart';
-import 'package:benta/core/utils/shared_pref.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:benta/core/utils/widgets/custom_all_use_button.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +50,6 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                   hintText: 'Password',
                   isPassword: true,
                   controller: passwordController,
-                  validator: MyValidators.passwordValidator,
                 ),
                 Align(
                   alignment: Alignment.centerRight,

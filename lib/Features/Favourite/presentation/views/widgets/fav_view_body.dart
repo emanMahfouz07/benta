@@ -63,6 +63,8 @@ class FavouriteViewBody extends StatelessWidget {
                   image: item['image'],
                   price: item['price'],
                   rate: item['rate'],
+                  isFavorite: false,
+                  onFavChange: () {},
                 );
               },
             ),

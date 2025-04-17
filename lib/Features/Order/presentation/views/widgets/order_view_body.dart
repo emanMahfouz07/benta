@@ -1,6 +1,7 @@
 import 'package:benta/Features/Favourite/presentation/views/widgets/fav_item_container.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/custom_search_bar.dart';
 import 'package:benta/core/utils/app_router.dart';
+import 'package:benta/core/utils/shared_pref.dart';
 import 'package:benta/core/utils/widgets/custom_all_use_button.dart';
 import 'package:benta/core/utils/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,9 @@ class OrderViewBody extends StatelessWidget {
                   title: item['title'],
                   image: item['image'],
                   price: item['price'].toString(),
-                  rate: item['rate'],
+                  rate: '4.5',
+                  isFavorite: false,
+                  onFavChange: () {},
                 );
               },
             ),
@@ -57,6 +60,9 @@ class OrderViewBody extends StatelessWidget {
             CustomAllUseButton(
               title: 'You have ${cartItems.length} items in cart ',
               onPressed: () {
+                print(
+                  "Favorites in storage: ${SharedPrefsHelper.getFavoriteItems()}",
+                );
                 context.pushReplacement(AppRouter.kMyCartView);
               },
             ),

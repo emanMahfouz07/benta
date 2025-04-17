@@ -16,6 +16,7 @@ class CustomItemContainer extends StatefulWidget {
     required this.onFavoriteChanged,
 
     required this.onAddToCart,
+    required this.isFavorite,
   });
 
   final String title;
@@ -24,6 +25,7 @@ class CustomItemContainer extends StatefulWidget {
   final String image;
   final ValueChanged<bool> onFavoriteChanged;
   final VoidCallback onAddToCart;
+  final bool isFavorite;
 
   @override
   State<CustomItemContainer> createState() => _CustomItemContainerState();
@@ -68,9 +70,18 @@ class _CustomItemContainerState extends State<CustomItemContainer> {
                         radius: 16,
                         backgroundColor: Colors.white,
                         child: IconButton(
-                          icon: Icon(FontAwesome.heart, size: 17),
-
-                          onPressed: () {},
+                          icon: Icon(
+                            isFavorite
+                                ? FontAwesome.heart_solid
+                                : FontAwesome.heart,
+                            size: 17,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isFavorite = !isFavorite;
+                            });
+                            widget.onFavoriteChanged(isFavorite);
+                          },
                         ),
                       ),
                     ),

@@ -103,15 +103,19 @@ class HomeViewBody extends StatelessWidget {
                                   : 'https://pngimg.com/uploads/chair/chair_PNG6905.png',
                           onFavoriteChanged: (isFavorite) async {
                             final itemId = item.id.toString();
-                            if (SharedPrefsHelper.isFavorite(itemId)) {
+                            if (isFavorite) {
+                              // Remove from favorites
                               await SharedPrefsHelper.removeFavoriteItem(
                                 itemId,
                               );
                             } else {
+                              // Add to favorites
                               await SharedPrefsHelper.addFavoriteItem(itemId);
                             }
                           },
-
+                          isFavorite: SharedPrefsHelper.isFavorite(
+                            item.id.toString(),
+                          ), // Show current favorite status
                           onAddToCart: () {
                             final userId = SharedPrefsHelper.getUserId();
                             if (userId != null) {

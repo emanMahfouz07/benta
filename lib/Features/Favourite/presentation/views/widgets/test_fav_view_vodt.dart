@@ -1,8 +1,12 @@
 import 'package:benta/Features/Favourite/presentation/views/widgets/fav_item_container.dart';
+import 'package:benta/Features/Home/data/models/product_model.dart';
 import 'package:benta/Features/Home/presentation/views/widgets/custom_search_bar.dart';
+import 'package:benta/core/utils/api_services.dart';
 import 'package:benta/core/utils/app_router.dart';
+import 'package:benta/core/utils/shared_pref.dart';
 import 'package:benta/core/utils/widgets/custom_all_use_button.dart';
 import 'package:benta/core/utils/widgets/custom_app_bar.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,34 +24,25 @@ class _TestFavViewVodtState extends State<TestFavViewVodt> {
   bool _showButton = true;
   bool _canScroll = false;
 
-  final List<Map<String, dynamic>> cartItems = [
-    {
-      "title": "Sofa - bed",
-      "image": 'assets/images/peyton_2_seater_sofa-compact_sized 1.png',
-      "rate": 4.5,
-      "price": "100.00",
-    },
-    {
-      "title": "Sofa - bed",
-      "image": 'assets/images/peyton_2_seater_sofa-compact_sized 1.png',
-      "rate": 4.7,
-      "price": "85.50",
-    },
-  ];
+  List<Product> favoriteItems = [];
+  Set<String> favoriteIds = {};
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    loadFavoriteItems();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        _canScroll = _scrollController.position.maxScrollExtent > 0;
-      });
+      if (_scrollController.hasClients) {
+        setState(() {
+          _canScroll = _scrollController.position.maxScrollExtent > 0;
+        });
+      }
     });
 
     _scrollController.addListener(() {
       final direction = _scrollController.position.userScrollDirection;
-
       if (_canScroll) {
         if (direction == ScrollDirection.reverse && _showButton) {
           setState(() => _showButton = false);
@@ -56,6 +51,43 @@ class _TestFavViewVodtState extends State<TestFavViewVodt> {
         }
       }
     });
+  }
+
+  Future<void> loadFavoriteItems() async {
+    final ids = SharedPrefsHelper.getFavoriteItems();
+    setState(() {
+      favoriteIds = ids.toSet();
+      isLoading = true;
+    });
+
+    try {
+      final futures = ids.map((id) => ApiServices(Dio()).getProductById(id));
+      final items = await Future.wait(futures);
+
+      setState(() {
+        favoriteItems = items;
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Failed to load favorites: $e');
+      setState(() => isLoading = false);
+    }
+  }
+
+  void toggleFavorite(Product item) async {
+    final id = item.id.toString();
+
+    setState(() {
+      if (favoriteIds.contains(id)) {
+        favoriteIds.remove(id);
+        SharedPrefsHelper.removeFavoriteItem(id);
+      } else {
+        favoriteIds.add(id);
+        SharedPrefsHelper.addFavoriteItem(id);
+      }
+    });
+
+    loadFavoriteItems();
   }
 
   @override
@@ -73,8 +105,6 @@ class _TestFavViewVodtState extends State<TestFavViewVodt> {
             controller: _scrollController,
             slivers: [
               SliverToBoxAdapter(child: SizedBox(height: 16.h)),
-
-              // AppBar + Search
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -87,27 +117,42 @@ class _TestFavViewVodtState extends State<TestFavViewVodt> {
                   ),
                 ),
               ),
+              if (isLoading)
+                const SliverToBoxAdapter(
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else if (favoriteItems.isEmpty)
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.all(24.w),
+                    child: const Text("No favorite items found."),
+                  ),
+                )
+              else
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final item = favoriteItems[index];
+                      final itemId = item.id.toString();
+                      final isFavorite = favoriteIds.contains(itemId);
 
-              // Items list
-              SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final item = cartItems[index];
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
-                      child: FavouriteItemContainer(
-                        title: item['title'],
-                        image: item['image'],
-                        price: item['price'],
-                        rate: item['rate'],
-                      ),
-                    );
-                  }, childCount: cartItems.length),
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: 16.h),
+                        child: FavouriteItemContainer(
+                          key: ValueKey('$itemId-$isFavorite'),
+                          title: item.name,
+                          image:
+                              'https://pngimg.com/uploads/chair/chair_PNG6905.png',
+                          price: item.price.toString(),
+                          rate: '4.5',
+                          isFavorite: isFavorite,
+                          onFavChange: () => toggleFavorite(item),
+                        ),
+                      );
+                    }, childCount: favoriteItems.length),
+                  ),
                 ),
-              ),
-
-              // Regular Button at the bottom of content
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(24.w, 10.h, 24.w, 40.h),
@@ -121,28 +166,6 @@ class _TestFavViewVodtState extends State<TestFavViewVodt> {
               ),
             ],
           ),
-
-          // Floating button (only if scrollable)
-          if (_canScroll)
-            Positioned(
-              left: 24.w,
-              right: 24.w,
-              bottom: 24.h,
-              child: AnimatedSlide(
-                offset: _showButton ? Offset.zero : Offset(0, 2),
-                duration: Duration(milliseconds: 300),
-                child: AnimatedOpacity(
-                  opacity: _showButton ? 1 : 0,
-                  duration: Duration(milliseconds: 300),
-                  child: CustomAllUseButton(
-                    title: 'Add all item to cart',
-                    onPressed: () {
-                      context.pushReplacement(AppRouter.kMyCartView);
-                    },
-                  ),
-                ),
-              ),
-            ),
         ],
       ),
     );

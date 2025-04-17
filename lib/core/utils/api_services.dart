@@ -67,6 +67,23 @@ class ApiServices {
     }
   }
 
+  Future<Product> getProductById(String id) async {
+    try {
+      final response = await dio.get(
+        '${_baseUrl}products/get_product.php?id=$id',
+      );
+      final data = response.data;
+
+      if (data['status'] == 'success') {
+        return Product.fromJson(data['product']);
+      } else {
+        throw Exception('Failed to load product');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
   Future<void> updateCartItemQuantity({
     required int userId,
     required int cartItemId,

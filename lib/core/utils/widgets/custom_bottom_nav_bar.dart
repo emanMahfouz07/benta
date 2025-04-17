@@ -15,17 +15,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
     Icons.home,
     Icons.favorite_border,
     Icons.shopping_cart_outlined,
-    Icons.local_shipping_outlined,
     Icons.person_outline,
   ];
 
-  final List<String> labels = [
-    "Home",
-    "Favourite",
-    "Cart",
-    "Order tracking",
-    "Profile",
-  ];
+  final List<String> labels = ["Home", "Favourite", "Cart", "Profile"];
   int getSelectedIndex(BuildContext context) {
     final GoRouterState routerState = GoRouterState.of(context);
     final String location = routerState.uri.toString();
@@ -33,8 +26,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
     if (location == AppRouter.kHomeView) return 0;
     if (location == AppRouter.kFavouriteView) return 1;
     if (location == AppRouter.kMyCartView) return 2;
-    if (location == AppRouter.kOrderView) return 3;
-    if (location == AppRouter.kProfileView) return 4;
+    if (location == AppRouter.kProfileView) return 3;
     return 0;
   }
 
@@ -49,10 +41,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       case 2:
         context.push(AppRouter.kMyCartView);
         break;
+
       case 3:
-        context.push(AppRouter.kOrderView);
-        break;
-      case 4:
         context.push(AppRouter.kProfileView);
         break;
     }

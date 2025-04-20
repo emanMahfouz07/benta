@@ -1,5 +1,4 @@
 import 'package:benta/Features/Home/presentation/views/widgets/custom_search_bar.dart';
-import 'package:benta/core/utils/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';

@@ -1,7 +1,11 @@
+import 'package:benta/Features/Cart/data/models/add_to_cart.dart';
+import 'package:benta/Features/Cart/presentation/manager/add%20to%20cart%20cubit/add_to_cart_cubit.dart';
 import 'package:benta/Features/Cart/presentation/manager/cubit/product_cubit.dart';
 import 'package:benta/Features/Cart/presentation/views/widgets/Item_info_bottom_sheet.dart';
 import 'package:benta/Features/Cart/presentation/views/widgets/custom_color_picker.dart';
 import 'package:benta/Features/Cart/presentation/views/widgets/custom_counter.dart';
+import 'package:benta/core/utils/app_router.dart';
+import 'package:benta/core/utils/shared_pref.dart';
 import 'package:benta/core/utils/widgets/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -105,6 +109,19 @@ class _ItemInfoViewBodyState extends State<ItemInfoViewBody> {
                           title: product.name,
                           desc: product.description,
                           price: product.price.toString(),
+                          onPressed: () {
+                            final userId = SharedPrefsHelper.getUserId();
+                            if (userId != null) {
+                              context.read<AddToCartCubit>().addToCart(
+                                AddToCartModel(
+                                  userId: userId,
+                                  productId: product.id,
+                                  quantity: 1,
+                                ),
+                              );
+                            }
+                            context.push(AppRouter.kMyCartView);
+                          },
                         ),
                       ],
                     ),

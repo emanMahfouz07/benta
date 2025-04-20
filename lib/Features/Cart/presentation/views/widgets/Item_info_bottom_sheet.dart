@@ -3,6 +3,7 @@ import 'package:benta/core/utils/constants.dart';
 import 'package:benta/core/utils/styles.dart';
 import 'package:benta/core/utils/widgets/custom_all_use_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class ItemInfoBottomSheet extends StatelessWidget {
@@ -12,17 +13,20 @@ class ItemInfoBottomSheet extends StatelessWidget {
     required this.title,
     required this.desc,
     required this.price,
+    this.onPressed,
   });
 
   final List<String> imageList;
   final String title;
   final String desc;
   final String price;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      height: 382.h,
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.only(top: 51, right: 24, left: 24),
@@ -39,12 +43,16 @@ class ItemInfoBottomSheet extends StatelessWidget {
                   "(4.5)",
                   style: Styles.style14.copyWith(color: kPrimaryColor),
                 ),
-                Spacer(),
-                Text(
-                  "\$$price",
-                  style: Styles.style18.copyWith(
-                    color: kPrimaryColor,
-                    fontWeight: FontWeight.bold,
+                SizedBox(width: 10.w),
+                Flexible(
+                  child: Text(
+                    softWrap: true,
+                    maxLines: 1,
+                    "\$$price",
+                    style: Styles.style18.copyWith(
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
@@ -86,12 +94,7 @@ class ItemInfoBottomSheet extends StatelessWidget {
             ),
             SizedBox(height: 25),
 
-            CustomAllUseButton(
-              title: 'Add to cart',
-              onPressed: () {
-                context.push(AppRouter.kMyCartView);
-              },
-            ),
+            CustomAllUseButton(title: 'Add to cart', onPressed: onPressed),
           ],
         ),
       ),

@@ -47,7 +47,7 @@ class _CategoryFilterState extends State<CategoryFilter> {
                       });
 
                       final selectedCategory = categories[index].name;
-                      print("Category selected: $selectedCategory");
+
                       context.read<GetItemCubit>().getItemsByCategory(
                         selectedCategory,
                       );
@@ -56,7 +56,7 @@ class _CategoryFilterState extends State<CategoryFilter> {
                     child: Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 14.w,
-                        vertical: 8.h,
+                        vertical: 4.h,
                       ),
                       decoration: BoxDecoration(
                         color:

@@ -4,6 +4,7 @@ import 'package:benta/Features/Auth/presentation/views/sign_in.dart';
 import 'package:benta/Features/Auth/presentation/views/sign_up_view.dart';
 import 'package:benta/Features/Auth/presentation/views/verification_view.dart';
 import 'package:benta/Features/Favourite/presentation/views/fav_view.dart';
+import 'package:benta/Features/Home/presentation/views/all_products_view.dart';
 import 'package:benta/Features/Home/presentation/views/home.dart';
 import 'package:benta/Features/Cart/presentation/views/item_info_view.dart';
 import 'package:benta/Features/Cart/presentation/views/my_cart_view.dart';
@@ -35,6 +36,7 @@ abstract class AppRouter {
   static const kNotificationView = '/kNotificationView';
   static const kEditProfileView = '/kEditProfileView';
   static const kCheckoutView = '/CheckoutView';
+  static const kAllProductsView = '/kAllProductsView';
 
   static const kChooseNotificationView = '/kChooseNotificationView';
   static final router = GoRouter(
@@ -104,6 +106,10 @@ abstract class AppRouter {
       GoRoute(
         path: kCheckoutView,
         builder: ((context, state) => const CheckoutView()),
+      ),
+      GoRoute(
+        path: kAllProductsView,
+        builder: ((context, state) => const AllProductsView()),
       ),
     ],
   );

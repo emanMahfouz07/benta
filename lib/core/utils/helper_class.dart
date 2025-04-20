@@ -14,4 +14,9 @@ class HelperClass {
       throw 'Could not launch $url';
     }
   }
+
+  String getFullImageUrl(String path) {
+    final cleanedPath = path.replaceFirst('uploads/', '');
+    return 'https://zbooma.com/$cleanedPath';
+  }
 }

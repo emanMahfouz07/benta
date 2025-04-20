@@ -51,11 +51,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     });
   }
 
-  String getFullImageUrl(String path) {
-    final cleanedPath = path.replaceFirst('uploads/', '');
-    return 'https://zbooma.com/$cleanedPath';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -101,7 +96,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             SizedBox(height: 25.h),
             AutoMovingCarousel(),
             SizedBox(height: 30.h),
-            CustomSeeAllWidget(title: 'Categories'),
+            CustomSeeAllWidget(
+              title: 'Categories',
+              onPressed: () {
+                context.push(AppRouter.kAllProductsView);
+              },
+            ),
             SizedBox(height: 15.h),
             BlocProvider(
               create:
@@ -174,9 +174,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                               price: item.price.toString(),
                               rate: '4.5',
                               image:
-                                  item.images.isNotEmpty
-                                      ? getFullImageUrl(item.images.last)
-                                      : 'https://pngimg.com/uploads/chair/chair_PNG6905.png',
+                                  'assets/images/Helena-3S-Sofa-60-80K-9 1.png',
                               onFavoriteChanged: (isFavorite) async {
                                 final itemId = item.id.toString();
 
@@ -211,12 +209,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                     message: 'Item added Successfully!',
                                     backgroundColor: Colors.green,
                                     icon: Icons.check_circle,
-                                  ).show(context);
-                                } else {
-                                  showFlashbar(
-                                    message: 'Please log in first',
-                                    backgroundColor: Colors.redAccent,
-                                    icon: Icons.error,
                                   ).show(context);
                                 }
                               },

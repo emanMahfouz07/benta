@@ -102,9 +102,7 @@ class _CustomItemContainerState extends State<CustomItemContainer> {
                       ),
                     ),
                   ),
-                  Center(
-                    child: Image.network(widget.image, fit: BoxFit.contain),
-                  ),
+                  Center(child: Image.asset(widget.image, fit: BoxFit.contain)),
                 ],
               ),
             ),

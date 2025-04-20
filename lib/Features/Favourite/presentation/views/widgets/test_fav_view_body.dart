@@ -8,6 +8,7 @@ import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/shared_pref.dart';
 import 'package:benta/core/utils/widgets/custom_all_use_button.dart';
 import 'package:benta/core/utils/widgets/custom_app_bar.dart';
+import 'package:benta/core/utils/widgets/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -15,14 +16,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class TestFavViewVodt extends StatefulWidget {
-  const TestFavViewVodt({super.key});
+class TestFavViewBody extends StatefulWidget {
+  const TestFavViewBody({super.key});
 
   @override
-  State<TestFavViewVodt> createState() => _TestFavViewVodtState();
+  State<TestFavViewBody> createState() => _TestFavViewBodyState();
 }
 
-class _TestFavViewVodtState extends State<TestFavViewVodt> {
+class _TestFavViewBodyState extends State<TestFavViewBody> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController searchController = TextEditingController();
   bool _showButton = true;
@@ -73,7 +74,12 @@ class _TestFavViewVodtState extends State<TestFavViewVodt> {
         isLoading = false;
       });
     } catch (e) {
-      print('Failed to load favorites: $e');
+      showFlashbar(
+        message: 'Failed to load favorites $e',
+        backgroundColor: Colors.red,
+        icon: Icons.error_rounded,
+      ).show(context);
+
       setState(() => isLoading = false);
     }
   }
@@ -129,7 +135,9 @@ class _TestFavViewVodtState extends State<TestFavViewVodt> {
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.all(24.w),
-                    child: const Text("No favorite items found."),
+                    child: Center(
+                      child: const Text("No favorite items found."),
+                    ),
                   ),
                 )
               else
@@ -162,6 +170,11 @@ class _TestFavViewVodtState extends State<TestFavViewVodt> {
                                   quantity: 1,
                                 ),
                               );
+                              showFlashbar(
+                                message: 'Item Added Succesfully!',
+                                backgroundColor: Colors.green,
+                                icon: Icons.check_rounded,
+                              ).show(context);
                             }
                           },
                         ),

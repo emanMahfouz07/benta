@@ -1,3 +1,4 @@
+import 'package:benta/Features/Cart/presentation/manager/add%20to%20cart%20cubit/add_to_cart_cubit.dart';
 import 'package:benta/Features/Cart/presentation/manager/cubit/product_cubit.dart';
 import 'package:benta/Features/Cart/presentation/views/widgets/item_info_view_body.dart';
 import 'package:benta/core/utils/api_services.dart';
@@ -16,8 +17,11 @@ class ItemInfoView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: kBGColor,
-      body: BlocProvider(
-        create: (context) => ProductCubit(ApiServices(Dio())),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => ProductCubit(ApiServices(Dio()))),
+          BlocProvider(create: (context) => AddToCartCubit(ApiServices(Dio()))),
+        ],
         child: ItemInfoViewBody(productId: id),
       ),
     );

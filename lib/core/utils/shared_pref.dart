@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPrefsHelper {
   static late SharedPreferences _prefs;
 
-  /// Call this once before using any prefs method (usually in main)
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
   }
@@ -51,13 +50,10 @@ class SharedPrefsHelper {
     return items ?? [];
   }
 
-  /// Save the full list
   static Future<void> saveFavoriteItems(List<String> items) async {
     await _prefs.setStringList('favorite_items', items);
-    print("💾 Saved to prefs: $items");
   }
 
-  /// Add item if it's not already in list
   static Future<void> addFavoriteItem(String itemId) async {
     final favorites = getFavoriteItems();
     if (!favorites.contains(itemId)) {
@@ -66,7 +62,6 @@ class SharedPrefsHelper {
     }
   }
 
-  /// Remove item if exists
   static Future<void> removeFavoriteItem(String itemId) async {
     final favorites = getFavoriteItems();
     if (favorites.contains(itemId)) {

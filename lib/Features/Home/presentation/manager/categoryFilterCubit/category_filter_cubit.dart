@@ -1,5 +1,7 @@
 import 'package:benta/Features/Home/data/models/categoty_model.dart';
+import 'package:benta/core/Errors/failure.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:benta/core/utils/api_services.dart';
 
@@ -22,8 +24,11 @@ class CategoryFilterCubit extends Cubit<CategoryFilterState> {
               .toList();
 
       emit(CategoryFilterSuccess(categories));
+    } on DioException catch (e) {
+      final failure = ServerFailure.fromDioError(e);
+      emit(CategoryFilterFailure(failure.errMessage));
     } catch (e) {
-      emit(CategoryFilterFailure(e.toString()));
+      emit(CategoryFilterFailure('Unexpected error: ${e.toString()}'));
     }
   }
 }

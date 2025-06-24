@@ -8,8 +8,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AllProductViewBody extends StatelessWidget {
+class AllProductViewBody extends StatefulWidget {
   const AllProductViewBody({super.key});
+
+  @override
+  State<AllProductViewBody> createState() => _AllProductViewBodyState();
+}
+
+class _AllProductViewBodyState extends State<AllProductViewBody> {
+  Set<String> _favorites = {};
+  @override
+  void initState() {
+    super.initState();
+    _loadFavourite();
+  }
+
+  void _loadFavourite() {
+    setState(() {
+      _favorites = Set<String>.from(SharedPrefsHelper.getFavoriteItems());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +64,20 @@ class AllProductViewBody extends StatelessWidget {
                     rate: "4.5",
                     image: 'assets/images/Helena-3S-Sofa-60-80K-9 1.png',
                     id: product.id,
-                    isFavorite: false,
-                    onFavoriteChanged: (_) {},
+                    isFavorite: _favorites.contains(product.id.toString()),
+                    onFavoriteChanged: (isFavourite) async {
+                      final itemId = product.id.toString();
+                      setState(() {
+                        if (isFavourite) {
+                          _favorites.add(itemId);
+                          SharedPrefsHelper.addFavoriteItem(itemId);
+                        } else {
+                          _favorites.remove(itemId);
+                          SharedPrefsHelper.removeFavoriteItem(itemId);
+                        }
+                      });
+                    },
+
                     onAddToCart: () {
                       final userId = SharedPrefsHelper.getUserId();
                       if (userId != null) {

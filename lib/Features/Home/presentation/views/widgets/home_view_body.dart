@@ -51,6 +51,17 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     });
   }
 
+  String getImageForProduct(int id) {
+    final productImages = [
+      'assets/images/81Fdsh6B2vL 1.png',
+      'assets/images/mandi-arm-chair-in-cream 2.png',
+      'assets/images/medium_WK_Ishino_0031_tif_85f15b1a07 1.png',
+      'assets/images/Helena-3S-Sofa-60-80K-9 1.png',
+      'assets/images/peyton_2_seater_sofa-compact_sized 1.png',
+    ];
+    return productImages[id % productImages.length];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -173,8 +184,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                               title: item.name,
                               price: item.price.toString(),
                               rate: '4.5',
-                              image:
-                                  'assets/images/Helena-3S-Sofa-60-80K-9 1.png',
+                              image: getImageForProduct(item.id),
                               onFavoriteChanged: (isFavorite) async {
                                 final itemId = item.id.toString();
 

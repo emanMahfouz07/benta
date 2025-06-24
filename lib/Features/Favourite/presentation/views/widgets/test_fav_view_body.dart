@@ -58,6 +58,17 @@ class _TestFavViewBodyState extends State<TestFavViewBody> {
     });
   }
 
+  String getImageForProduct(int id) {
+    final productImages = [
+      'assets/images/81Fdsh6B2vL 1.png',
+      'assets/images/mandi-arm-chair-in-cream 2.png',
+      'assets/images/medium_WK_Ishino_0031_tif_85f15b1a07 1.png',
+      'assets/images/Helena-3S-Sofa-60-80K-9 1.png',
+      'assets/images/peyton_2_seater_sofa-compact_sized 1.png',
+    ];
+    return productImages[id % productImages.length];
+  }
+
   Future<void> loadFavoriteItems() async {
     final ids = SharedPrefsHelper.getFavoriteItems();
     setState(() {
@@ -154,8 +165,7 @@ class _TestFavViewBodyState extends State<TestFavViewBody> {
                         child: FavouriteItemContainer(
                           key: ValueKey('$itemId-$isFavorite'),
                           title: item.name,
-                          image:
-                              'https://pngimg.com/uploads/chair/chair_PNG6905.png',
+                          image: getImageForProduct(item.id),
                           price: item.price.toString(),
                           rate: '4.5',
                           isFavorite: isFavorite,

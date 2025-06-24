@@ -1,0 +1,5 @@
+class ApiKey {
+  static const apiKey =
+      'ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TVRBek9URTBNeXdpYm1GdFpTSTZJbWx1YVhScFlXd2lmUS5qR1dsUjFaX1o2WVpJRXlLeEdHRV82bENaQURqaWxUVE9hbFNtSDEyMHZrZnNEUk12Yl9CZVlCcWFMcmlJd0d5V2tSS3U2cmhTYmFxTzJKWElfZjQydw==';
+  static const cardPaymentMethodIntegrationID = 5060325;
+}

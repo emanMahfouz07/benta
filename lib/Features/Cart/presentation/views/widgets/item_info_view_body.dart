@@ -4,6 +4,7 @@ import 'package:benta/Features/Cart/presentation/manager/cubit/product_cubit.dar
 import 'package:benta/Features/Cart/presentation/views/widgets/Item_info_bottom_sheet.dart';
 import 'package:benta/Features/Cart/presentation/views/widgets/custom_color_picker.dart';
 import 'package:benta/Features/Cart/presentation/views/widgets/custom_counter.dart';
+import 'package:benta/core/custom_360_viewer.dart';
 import 'package:benta/core/utils/app_router.dart';
 import 'package:benta/core/utils/shared_pref.dart';
 import 'package:benta/core/utils/widgets/flushbar.dart';
@@ -33,8 +34,8 @@ class _ItemInfoViewBodyState extends State<ItemInfoViewBody> {
 
   void loadImages() {
     List<ImageProvider> images = [];
-    for (int i = 1; i <= 52; i++) {
-      images.add(AssetImage('assets/sample/$i.png'));
+    for (int i = 1; i <= 12; i++) {
+      images.add(AssetImage('assets/test/$i.png'));
     }
     setState(() {
       imageList = images;
@@ -92,12 +93,9 @@ class _ItemInfoViewBodyState extends State<ItemInfoViewBody> {
                               child: SizedBox(
                                 width: 250.w,
                                 height: 340.h,
-                                child: ImageView360(
-                                  key: UniqueKey(),
-                                  imageList: imageList,
-                                  autoRotate: true,
-                                  rotationCount: 2,
-                                  swipeSensitivity: 2,
+                                child: Fake3DSingleImageSpin(
+                                  imagePath:
+                                      'assets/images/Helena-3S-Sofa-60-80K-9 1.png',
                                 ),
                               ),
                             ),

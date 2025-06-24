@@ -26,11 +26,25 @@ class MyCartViewBody extends StatefulWidget {
 
 class _MyCartViewBodyState extends State<MyCartViewBody> {
   double totalPrice = 0.0;
+  List<CartItem> currentCartItems = [];
 
   @override
   void initState() {
     super.initState();
     _initCart();
+  }
+
+  String getImageForItem(CartItem item) {
+    final imageList = [
+      'assets/images/81Fdsh6B2vL 1.png',
+      'assets/images/mandi-arm-chair-in-cream 2.png',
+      'assets/images/medium_WK_Ishino_0031_tif_85f15b1a07 1.png',
+      'assets/images/Helena-3S-Sofa-60-80K-9 1.png',
+      'assets/images/peyton_2_seater_sofa-compact_sized 1.png',
+    ];
+
+    final index = item.id % imageList.length;
+    return imageList[index];
   }
 
   Future<void> _initCart() async {
@@ -136,12 +150,11 @@ class _MyCartViewBodyState extends State<MyCartViewBody> {
                               child: CustomCartContainer(
                                 cartItemId: item.id,
                                 title: item.name,
-                                image:
-                                    'assets/images/mandi-arm-chair-in-cream 2.png',
+                                image: getImageForItem(item),
                                 rate: 4.4,
                                 price: item.price,
                                 quantity: item.quantity,
-                                onTotalChanged: (newQuantity) {},
+                                onTotalChanged: (_) {},
                               ),
                             );
                           },
@@ -158,7 +171,12 @@ class _MyCartViewBodyState extends State<MyCartViewBody> {
                         CustomAllUseButton(
                           title: 'Check out',
                           onPressed: () {
-                            context.push(AppRouter.kCheckoutView);
+                            final totalPrice = _calculateTotalPrice(cartItems);
+
+                            context.push(
+                              AppRouter.kCheckoutView,
+                              extra: totalPrice,
+                            );
                           },
                         ),
                       ],

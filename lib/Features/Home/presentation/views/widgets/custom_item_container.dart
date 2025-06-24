@@ -55,56 +55,43 @@ class _CustomItemContainerState extends State<CustomItemContainer> {
       padding: EdgeInsets.only(right: 14.w),
       child: Column(
         children: [
-          GestureDetector(
-            onTap: () {
-              context.push(AppRouter.kItemInfoView, extra: {'id': widget.id});
-            },
-            child: Container(
-              width: 127.w,
-              height: 124.h,
-              decoration: BoxDecoration(
-                color: kBGColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.r),
-                  topRight: Radius.circular(10.r),
-                ),
+          Container(
+            width: 127.w,
+            height: 124.h,
+            decoration: BoxDecoration(
+              color: kBGColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10.r),
+                topRight: Radius.circular(10.r),
               ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 8.h,
-                    right: 8.w,
-                    child: GestureDetector(
-                      onTap: () {
+            ),
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: Image.asset(widget.image, fit: BoxFit.contain),
+                ),
+                Positioned(
+                  top: 8.h,
+                  right: 8.w,
+                  child: CircleAvatar(
+                    radius: 17,
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      icon: Icon(
+                        _isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: _isFavorite ? kPrimaryColor : kPrimaryColor,
+                        size: 18,
+                      ),
+                      onPressed: () {
                         setState(() {
                           _isFavorite = !_isFavorite;
                         });
                         widget.onFavoriteChanged(_isFavorite);
                       },
-                      child: CircleAvatar(
-                        radius: 17,
-                        backgroundColor: Colors.white,
-                        child: IconButton(
-                          icon: Icon(
-                            _isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: _isFavorite ? kPrimaryColor : kPrimaryColor,
-                            size: 18,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isFavorite = !_isFavorite;
-                            });
-                            widget.onFavoriteChanged(_isFavorite);
-                          },
-                        ),
-                      ),
                     ),
                   ),
-                  Center(child: Image.asset(widget.image, fit: BoxFit.contain)),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Container(
@@ -124,12 +111,20 @@ class _CustomItemContainerState extends State<CustomItemContainer> {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        widget.title,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: Styles.style14.copyWith(
-                          fontWeight: FontWeight.w600,
+                      child: GestureDetector(
+                        onTap: () {
+                          context.push(
+                            AppRouter.kItemInfoView,
+                            extra: {'id': widget.id},
+                          );
+                        },
+                        child: Text(
+                          widget.title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: Styles.style14.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),

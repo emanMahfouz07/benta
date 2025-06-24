@@ -61,7 +61,7 @@ class _CustomCartContainerState extends State<CustomCartContainer> {
           children: [
             Container(
               width: 156.w,
-              padding: EdgeInsets.all(8.r),
+
               decoration: BoxDecoration(
                 color: kBGColor,
                 borderRadius: BorderRadius.only(
@@ -71,19 +71,18 @@ class _CustomCartContainerState extends State<CustomCartContainer> {
               ),
               child: Column(
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      iconSize: 20,
-                      onPressed: () {},
-                      icon: Icon(Icons.favorite_outline),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Icon(Icons.favorite_outline, size: 16),
                     ),
                   ),
-                  Expanded(
-                    child: Center(
-                      child: Image.asset(widget.image, fit: BoxFit.contain),
-                    ),
+
+                  SizedBox(
+                    height: 85.h,
+                    width: 250.w,
+                    child: Image.asset(widget.image),
                   ),
                 ],
               ),
@@ -142,6 +141,8 @@ class _CustomCartContainerState extends State<CustomCartContainer> {
                         SmallCounter(
                           initialCount: widget.quantity,
                           onChanged: (newQuantity) async {
+                            updateCount(newQuantity);
+
                             final prefs = await SharedPreferences.getInstance();
                             final userId = prefs.getInt('user_id');
 

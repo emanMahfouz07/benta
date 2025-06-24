@@ -70,7 +70,7 @@ class _FavouriteItemContainerState extends State<FavouriteItemContainer> {
                   ),
                   Flexible(
                     child: Center(
-                      child: Image.network(widget.image, fit: BoxFit.cover),
+                      child: Image.asset(widget.image, fit: BoxFit.cover),
                     ),
                   ),
                 ],

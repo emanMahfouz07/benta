@@ -16,8 +16,8 @@ class _AutoMovingCarouselState extends State<AutoMovingCarousel> {
 
   final List<String> imageList = [
     'assets/images/fd1_lngchr_bh_frontlow-field-lounge-chair-tait-blush_2 1.png',
-    'assets/images/fd1_lngchr_bh_frontlow-field-lounge-chair-tait-blush_2 1.png',
-    'assets/images/fd1_lngchr_bh_frontlow-field-lounge-chair-tait-blush_2 1.png',
+    'assets/images/phillip-goldsberry-fZuleEfeA1Q-unsplash-removebg-preview.png',
+    'assets/images/marlon-corona-1tMc27CFUbA-unsplash-removebg-preview.png',
   ];
 
   @override
